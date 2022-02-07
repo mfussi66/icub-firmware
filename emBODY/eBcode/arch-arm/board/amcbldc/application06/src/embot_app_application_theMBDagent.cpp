@@ -34,8 +34,8 @@
 
 //#define TEST_DURATION_FOC
 
-#define EXTFAULT_enabled
-#define EXTFAULT_handler_will_disable_motor
+//#define EXTFAULT_enabled
+//#define EXTFAULT_handler_will_disable_motor
 
 // --------------------------------------------------------------------------------------------------------------------
 // - pimpl: private implementation (see scott meyers: item 22 of effective modern c++, item 31 of effective c++
@@ -480,15 +480,16 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
     static uint32_t counter;
     if(counter % 1000 == 0)
     {
-        sprintf(msg2, "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
+        sprintf(msg2, "%d %d,%d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
                                  impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
                                  Vabc0,  \
                                  Vabc1,  \
                                  Vabc2,  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_motorsensors_Iabc[0],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_motorsensors_Iabc[1],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_motorsensors_Iabc[2],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_motorsensors_angle,    \
+                                 impl->amc_bldc.AMC_BLDC_Y.ConfigurationParameters_p.motorconfig.pole_pairs,
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.angle,    \
                                  impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current,    \
                                  impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Iq_fbk.current);
         embot::core::print(msg2);
