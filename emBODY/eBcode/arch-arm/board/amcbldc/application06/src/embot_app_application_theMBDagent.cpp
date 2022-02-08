@@ -485,7 +485,6 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
                                  Vabc0,  \
                                  Vabc1,  \
                                  Vabc2,  \
-                                 impl->amc_bldc.AMC_BLDC_Y.ConfigurationParameters_p.motorconfig.pole_pairs,
                                  impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
                                  impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
                                  impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \

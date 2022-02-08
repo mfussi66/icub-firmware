@@ -314,7 +314,7 @@ namespace embot { namespace hw { namespace motor {
         {
             return resNOK;
         }
-        
+
         return s_hw_setpwm(h, v);
     } 
     
@@ -415,7 +415,7 @@ namespace embot { namespace hw { namespace motor {
     }
     
     result_t s_hw_setpwmUVW(MOTOR h, Pwm u, Pwm v, Pwm w)
-    {        
+    {   
         pwmSet(u, v, w);
         return resOK;
     }

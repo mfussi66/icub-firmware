@@ -602,20 +602,10 @@ void pwmSet(uint16_t u, uint16_t v, uint16_t w)
     if (u > (uint16_t)MAX_PWM) u = MAX_PWM;
     if (v > (uint16_t)MAX_PWM) v = MAX_PWM;
     if (w > (uint16_t)MAX_PWM) w = MAX_PWM;
-    /* Update PWM generators */
-//    static uint32_t cnt_pwmset = 0;
- //   if(cnt_pwmset % 1000 == 0)
-  //  {
-   //     static char msgpwm[10];
-    //    sprintf(msgpwm, "SendPwm_");
-    //    embot::core::print(msgpwm);
-     //   cnt_pwmset = 0;
-  //  }
+    
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, u);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, v);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, w);
-    
-//    cnt_pwmset++;
 }
 
 
