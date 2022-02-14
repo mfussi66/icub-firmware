@@ -26,19 +26,19 @@ inline bool IsException(void)
 
 inline void rtw_mutex_lock(void) 
 {    
-    if(false == IsException())
-    {
-        NVIC_DisableIRQ(DMA1_Channel2_IRQn);  
-            
-    }  
+//    if(false == IsException())
+//    {
+//        NVIC_DisableIRQ(DMA1_Channel2_IRQn);  
+//            
+//    }  
 }
 
 inline void rtw_mutex_unlock(void) 
 {
-    if(false == IsException())
-    {       
-        NVIC_EnableIRQ(DMA1_Channel2_IRQn);
-    }  
+//    if(false == IsException())
+//    {       
+//        NVIC_EnableIRQ(DMA1_Channel2_IRQn);
+//    }  
 }
 
 // - end-of-file (leave a blank line after)----------------------------------------------------------------------------

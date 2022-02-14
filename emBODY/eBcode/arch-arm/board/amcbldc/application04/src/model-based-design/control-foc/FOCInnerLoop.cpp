@@ -22,6 +22,13 @@
 #include "control_foc.h"
 #include "control_foc_private.h"
 
+#include "embot_core.h"
+#include "embot_tools.h"
+#include <array>
+
+
+embot::tools::PeriodValidator pvalidate;
+
 namespace amc_bldc_codegen
 {
   // System initialize for function-call system: '<Root>/FOC inner loop'
@@ -34,6 +41,10 @@ namespace amc_bldc_codegen
     //   Store in Global RAM
 
     control_foc_DW.DelayInput1_DSTATE = ControlModes_Idle;
+      
+    embot::tools::Histogram::Config histcfg = {0, 64, 1 * embot::core::time1microsec};
+    embot::tools::PeriodValidator::Config pvalidatecfg = {36, 46, 10000, histcfg};
+    pvalidate.init(pvalidatecfg);
   }
 
   // Output and update for function-call system: '<Root>/FOC inner loop'
@@ -42,6 +53,38 @@ namespace amc_bldc_codegen
     *rtu_Sensors, const EstimatedData *rtu_Estimates, const Targets *rtu_Targets,
     const ControlOuterOutputs *rtu_OuterOutputs, ControlOutputs *rty_FOCOutputs)
   {
+      
+      
+    uint64_t deltatime;
+    std::array<uint64_t, 512> vals {};
+    pvalidate.tick(embot::core::now(), deltatime);
+
+    if(pvalidate.report())
+    {
+        const embot::tools::Histogram * phisto = pvalidate.histogram();
+        const embot::tools::Histogram::Values * vv = phisto->getvalues();
+        static char msg3[64];
+        for(int i=0; i<vv->inside.size(); i++)
+        {
+            if(i < vals.size())
+            {
+                vals[i] = vv->inside[i];
+
+                sprintf(msg3, "%llu", vals[i]);
+                embot::core::print(msg3);
+            }
+        }
+        sprintf(msg3, "---------");
+        embot::core::print(msg3);
+        int s = 0;
+        if(++s > 10)
+        {
+            sprintf(msg3, "%d", s);
+            embot::core::print(msg3);
+        }
+    }
+      
+      
     real32_T rtb_IaIbIc0[2];
     real32_T rtb_Add;
     real32_T rtb_Gain2;

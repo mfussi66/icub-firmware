@@ -533,7 +533,7 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
         
         embot::hw::motor::setpwm(embot::hw::MOTOR::one, Vabc0, Vabc1, Vabc2);
        
-#define DEBUG_PARAMS // TODO: remove
+//#define DEBUG_PARAMS // TODO: remove
 #ifdef DEBUG_PARAMS
         
         static char msg2[64];

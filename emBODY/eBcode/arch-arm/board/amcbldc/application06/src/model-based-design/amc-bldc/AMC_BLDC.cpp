@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 3.268
+// Model version                  : 3.272
 // Simulink Coder version         : 9.6 (R2021b) 14-May-2021
-// C/C++ source code generated on : Tue Feb  8 09:38:29 2022
+// C/C++ source code generated on : Mon Feb 14 17:48:02 2022
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -113,87 +113,35 @@ namespace amc_bldc_codegen
   // Model step function for TID1
   void AMC_BLDC::step_FOC()        // Sample time: [3.65714285714286E-5s, 0.0s]
   {
-    FOCSlowInputs rtb_BusConversion_InsertedFor_F;
+    FOCSlowInputs rtb_TmpRTBAtFOCInport2;
     int8_T wrBufIdx;
 
-    // RateTransition generated from: '<Root>/Adapter2'
+    // RateTransition generated from: '<Root>/FOC'
     rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_hj;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_RDBuf =
+      AMC_BLDC_DW.TmpRTBAtFOCInport2_LstBufWR;
     rtw_mutex_unlock();
-
-    // BusCreator generated from: '<Root>/FOC' incorporates:
-    //   RateTransition generated from: '<Root>/Adapter2'
-
-    rtb_BusConversion_InsertedFor_F.flags =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_l[AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p];
-
-    // RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3 =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mp;
-    rtw_mutex_unlock();
-
-    // BusCreator generated from: '<Root>/FOC' incorporates:
-    //   RateTransition generated from: '<Root>/Adapter2'
-
-    rtb_BusConversion_InsertedFor_F.configurationparameters =
-      AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3];
-
-    // RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_ko =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_b2;
-    rtw_mutex_unlock();
-
-    // BusCreator generated from: '<Root>/FOC' incorporates:
-    //   RateTransition generated from: '<Root>/Adapter2'
-
-    rtb_BusConversion_InsertedFor_F.estimateddata =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_k[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_ko];
-
-    // RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mb =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_jj;
-    rtw_mutex_unlock();
-
-    // BusCreator generated from: '<Root>/FOC' incorporates:
-    //   RateTransition generated from: '<Root>/Adapter2'
-
-    rtb_BusConversion_InsertedFor_F.targets =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mb];
-
-    // RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_bw =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_p5;
-    rtw_mutex_unlock();
-
-    // BusCreator generated from: '<Root>/FOC' incorporates:
-    //   RateTransition generated from: '<Root>/Adapter2'
-
-    rtb_BusConversion_InsertedFor_F.controlouteroutputs =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_i[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_bw];
+    rtb_TmpRTBAtFOCInport2 =
+      AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[AMC_BLDC_DW.TmpRTBAtFOCInport2_RDBuf];
 
     // ModelReference: '<Root>/FOC' incorporates:
     //   Inport: '<Root>/SensorsData'
     //   Outport: '<Root>/ControlOutputs'
 
-    FOCMDLOBJ2.step(&AMC_BLDC_U.SensorsData_p, &rtb_BusConversion_InsertedFor_F,
+    FOCMDLOBJ2.step(&AMC_BLDC_U.SensorsData_p, &rtb_TmpRTBAtFOCInport2,
                     &AMC_BLDC_Y.ControlOutputs_p);
 
-    // RateTransition generated from: '<Root>/Adapter1' incorporates:
+    // RateTransition generated from: '<S7>/SupervisorFSM_RX' incorporates:
     //   Outport: '<Root>/ControlOutputs'
 
     rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_js +
+    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpo_lm +
       1);
     if (wrBufIdx == 3) {
       wrBufIdx = 0;
     }
 
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_a) {
+    if (wrBufIdx == AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_k) {
       wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
       if (wrBufIdx == 3) {
         wrBufIdx = 0;
@@ -203,21 +151,57 @@ namespace amc_bldc_codegen
     rtw_mutex_unlock();
     switch (wrBufIdx) {
      case 0:
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_d = AMC_BLDC_Y.ControlOutputs_p;
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInport3 = AMC_BLDC_Y.ControlOutputs_p;
       break;
 
      case 1:
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_j2 = AMC_BLDC_Y.ControlOutputs_p;
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_o = AMC_BLDC_Y.ControlOutputs_p;
       break;
 
      case 2:
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_o = AMC_BLDC_Y.ControlOutputs_p;
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_l = AMC_BLDC_Y.ControlOutputs_p;
       break;
     }
 
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_js = wrBufIdx;
+    AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpo_lm = wrBufIdx;
 
-    // End of RateTransition generated from: '<Root>/Adapter1'
+    // End of RateTransition generated from: '<S7>/SupervisorFSM_RX'
+
+    // RateTransition generated from: '<S7>/SupervisorFSM_TX' incorporates:
+    //   Outport: '<Root>/ControlOutputs'
+
+    rtw_mutex_lock();
+    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_h +
+      1);
+    if (wrBufIdx == 3) {
+      wrBufIdx = 0;
+    }
+
+    if (wrBufIdx == AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_k) {
+      wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
+      if (wrBufIdx == 3) {
+        wrBufIdx = 0;
+      }
+    }
+
+    rtw_mutex_unlock();
+    switch (wrBufIdx) {
+     case 0:
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInport4 = AMC_BLDC_Y.ControlOutputs_p;
+      break;
+
+     case 1:
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_f = AMC_BLDC_Y.ControlOutputs_p;
+      break;
+
+     case 2:
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_c = AMC_BLDC_Y.ControlOutputs_p;
+      break;
+    }
+
+    AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_h = wrBufIdx;
+
+    // End of RateTransition generated from: '<S7>/SupervisorFSM_TX'
 
     // RateTransition generated from: '<Root>/Adapter3' incorporates:
     //   Inport: '<Root>/SensorsData'
@@ -229,7 +213,7 @@ namespace amc_bldc_codegen
       wrBufIdx = 0;
     }
 
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_pa) {
+    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p) {
       wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
       if (wrBufIdx == 3) {
         wrBufIdx = 0;
@@ -239,7 +223,7 @@ namespace amc_bldc_codegen
     rtw_mutex_unlock();
     switch (wrBufIdx) {
      case 0:
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_e = AMC_BLDC_U.SensorsData_p;
+      AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF = AMC_BLDC_U.SensorsData_p;
       break;
 
      case 1:
@@ -254,6 +238,33 @@ namespace amc_bldc_codegen
     AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_g = wrBufIdx;
 
     // End of RateTransition generated from: '<Root>/Adapter3'
+    
+//    if(rtb_TmpRTBAtFOCInport2.targets.motorcurrent.current > 0.1 && !mystart_flag)
+//    {
+//        mystart = embot::core::now();
+//        mystart_flag = true;
+//    }
+//    
+//    uint64_t curr = embot::core::now();
+//    uint64_t deltatime;
+//    if(mystart_flag && (curr - mystart >= 3 * embot::core::time1second)) 
+//    {
+//        pvalidate.tick(embot::core::now(), deltatime);
+//          
+//        if(pvalidate.report())
+//        {
+//            const embot::tools::Histogram * phisto = pvalidate.histogram();
+//            const embot::tools::Histogram::Values * vv = phisto->getvalues();
+//            static char msg3[10];
+//            for(int i=0; i<vv->inside.size(); i++)
+//            {
+//                snprintf(msg3, sizeof(msg3), "%llu", vv->inside[i]);
+//                embot::core::print(msg3);
+//            }
+//            snprintf(msg3, sizeof(msg3), "----");
+//            embot::core::print(msg3);
+//        }
+//    }
   }
 
   // Model step function for TID2
@@ -262,22 +273,29 @@ namespace amc_bldc_codegen
     // local block i/o variables
     ControlOuterOutputs rtb_OuterControl;
     ConfigurationParameters *rtb_ZOHBlockInsertedForAdapte_0;
+    ControlOuterOutputs *rtb_BusConversion_InsertedFor_3;
+    ControlOutputs rtb_TmpRTBAtSupervisorFSM_TXInp;
+    EstimatedData *rtb_BusConversion_InsertedFor_1;
+    Flags *rtb_BusConversion_InsertedFor_0;
+    Targets *rtb_BusConversion_InsertedFor_2;
     int8_T wrBufIdx;
 
-    // UnitDelay generated from: '<Root>/Adapter'
-    rtb_ZOHBlockInsertedForAdapte_0 =
-      &AMC_BLDC_DW.ZOHBlockInsertedForAdapter_Inse;
+    // ModelReference: '<S6>/CAN_Decoder' incorporates:
+    //   Inport: '<Root>/PacketsRx'
+
+    AMC_BLDC_B.CAN_Decoder_o1 = CAN_DecoderMDLOBJ2.step(AMC_BLDC_U.PacketsRx,
+      AMC_BLDC_B.CAN_Decoder_o2, AMC_BLDC_B.CAN_Decoder_o3);
 
     // RateTransition generated from: '<Root>/Adapter3'
     rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_pa =
+    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p =
       AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_g;
     rtw_mutex_unlock();
-    switch (AMC_BLDC_DW.RTBInsertedForAdapter_Insert_pa) {
+    switch (AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p) {
      case 0:
       // RateTransition generated from: '<Root>/Adapter3'
       AMC_BLDC_B.RTBInsertedForAdapter_InsertedF =
-        AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_e;
+        AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF;
       break;
 
      case 1:
@@ -295,44 +313,44 @@ namespace amc_bldc_codegen
 
     // End of RateTransition generated from: '<Root>/Adapter3'
 
+    // UnitDelay generated from: '<Root>/Adapter' incorporates:
+    //   BusCreator generated from: '<Root>/FOC'
+
+    rtb_ZOHBlockInsertedForAdapte_0 =
+      &AMC_BLDC_DW.ZOHBlockInsertedForAdapter_Inse;
+
     // ModelReference: '<S5>/Estimation_Velocity' incorporates:
     //   Outport: '<Root>/EstimatedData'
 
     Estimation_VelocityMDLOBJ1.step(AMC_BLDC_B.RTBInsertedForAdapter_InsertedF,
       rtb_ZOHBlockInsertedForAdapte_0[0], AMC_BLDC_Y.EstimatedData_p);
 
-    // ModelReference: '<S6>/CAN_Decoder' incorporates:
-    //   Inport: '<Root>/PacketsRx'
-
-    AMC_BLDC_B.CAN_Decoder_o1 = CAN_DecoderMDLOBJ2.step(AMC_BLDC_U.PacketsRx,
-      AMC_BLDC_B.CAN_Decoder_o2, AMC_BLDC_B.CAN_Decoder_o3);
-
-    // RateTransition generated from: '<Root>/Adapter1'
+    // RateTransition generated from: '<S7>/SupervisorFSM_RX'
     rtw_mutex_lock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_a =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_js;
+    AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_k =
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpo_lm;
     rtw_mutex_unlock();
-    switch (AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_a) {
+    switch (AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_k) {
      case 0:
-      // RateTransition generated from: '<Root>/Adapter1'
-      AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a =
-        AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_d;
+      // RateTransition generated from: '<S7>/SupervisorFSM_RX'
+      AMC_BLDC_B.TmpRTBAtSupervisorFSM_RXInport3 =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInport3;
       break;
 
      case 1:
-      // RateTransition generated from: '<Root>/Adapter1'
-      AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a =
-        AMC_BLDC_DW.RTBInsertedForAdapter_Insert_j2;
+      // RateTransition generated from: '<S7>/SupervisorFSM_RX'
+      AMC_BLDC_B.TmpRTBAtSupervisorFSM_RXInport3 =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_o;
       break;
 
      case 2:
-      // RateTransition generated from: '<Root>/Adapter1'
-      AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a =
-        AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_o;
+      // RateTransition generated from: '<S7>/SupervisorFSM_RX'
+      AMC_BLDC_B.TmpRTBAtSupervisorFSM_RXInport3 =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_RXInpor_l;
       break;
     }
 
-    // End of RateTransition generated from: '<Root>/Adapter1'
+    // End of RateTransition generated from: '<S7>/SupervisorFSM_RX'
 
     // ModelReference: '<S7>/SupervisorFSM_RX' incorporates:
     //   Inport: '<Root>/ExternalFlags'
@@ -343,26 +361,9 @@ namespace amc_bldc_codegen
     SupervisorFSM_RXMDLOBJ6.step(AMC_BLDC_B.CAN_Decoder_o2,
       AMC_BLDC_B.CAN_Decoder_o1, AMC_BLDC_B.CAN_Decoder_o3,
       AMC_BLDC_Y.EstimatedData_p, AMC_BLDC_B.RTBInsertedForAdapter_InsertedF,
-      AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a, AMC_BLDC_U.ExternalFlags_p,
+      AMC_BLDC_B.TmpRTBAtSupervisorFSM_RXInport3, AMC_BLDC_U.ExternalFlags_p,
       AMC_BLDC_B.Targets_n, AMC_BLDC_Y.ConfigurationParameters_p,
       AMC_BLDC_Y.Flags_p);
-
-    // ModelReference: '<S7>/SupervisorFSM_TX' incorporates:
-    //   Outport: '<Root>/ConfigurationParameters'
-    //   Outport: '<Root>/EstimatedData'
-    //   Outport: '<Root>/Flags'
-
-    SupervisorFSM_TXMDLOBJ7.step(AMC_BLDC_Y.Flags_p,
-      AMC_BLDC_B.RTBInsertedForAdapter_InsertedF, AMC_BLDC_Y.EstimatedData_p,
-      AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a,
-      AMC_BLDC_Y.ConfigurationParameters_p, AMC_BLDC_B.MessagesTx,
-      AMC_BLDC_B.SupervisorFSM_TX_o2);
-
-    // ModelReference: '<S6>/CAN_Encoder' incorporates:
-    //   Outport: '<Root>/PacketsTx'
-
-    CAN_EncoderMDLOBJ4.step(AMC_BLDC_B.MessagesTx,
-      AMC_BLDC_B.SupervisorFSM_TX_o2, AMC_BLDC_Y.PacketsTx);
 
     // ModelReference: '<Root>/OuterControl' incorporates:
     //   Outport: '<Root>/ConfigurationParameters'
@@ -374,15 +375,28 @@ namespace amc_bldc_codegen
       AMC_BLDC_B.RTBInsertedForAdapter_InsertedF, AMC_BLDC_Y.EstimatedData_p,
       rtb_OuterControl);
 
-    // RateTransition generated from: '<Root>/Adapter2'
+    // BusCreator generated from: '<Root>/FOC' incorporates:
+    //   Outport: '<Root>/ConfigurationParameters'
+    //   Outport: '<Root>/EstimatedData'
+    //   Outport: '<Root>/Flags'
+    //   UnitDelay generated from: '<Root>/Adapter'
+
+    rtb_BusConversion_InsertedFor_0 = &AMC_BLDC_Y.Flags_p;
+    rtb_ZOHBlockInsertedForAdapte_0 = &AMC_BLDC_Y.ConfigurationParameters_p;
+    rtb_BusConversion_InsertedFor_1 = &AMC_BLDC_Y.EstimatedData_p;
+    rtb_BusConversion_InsertedFor_2 = &AMC_BLDC_B.Targets_n;
+    rtb_BusConversion_InsertedFor_3 = &rtb_OuterControl;
+
+    // RateTransition generated from: '<Root>/FOC' incorporates:
+    //   BusCreator generated from: '<Root>/FOC'
+
     rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_p5 +
-      1);
+    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.TmpRTBAtFOCInport2_LstBufWR + 1);
     if (wrBufIdx == 3) {
       wrBufIdx = 0;
     }
 
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_bw) {
+    if (wrBufIdx == AMC_BLDC_DW.TmpRTBAtFOCInport2_RDBuf) {
       wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
       if (wrBufIdx == 3) {
         wrBufIdx = 0;
@@ -390,92 +404,59 @@ namespace amc_bldc_codegen
     }
 
     rtw_mutex_unlock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_i[wrBufIdx] = rtb_OuterControl;
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_p5 = wrBufIdx;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[wrBufIdx].flags =
+      *rtb_BusConversion_InsertedFor_0;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[wrBufIdx].configurationparameters =
+      *rtb_ZOHBlockInsertedForAdapte_0;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[wrBufIdx].estimateddata =
+      *rtb_BusConversion_InsertedFor_1;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[wrBufIdx].targets =
+      *rtb_BusConversion_InsertedFor_2;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_Buf[wrBufIdx].controlouteroutputs =
+      *rtb_BusConversion_InsertedFor_3;
+    AMC_BLDC_DW.TmpRTBAtFOCInport2_LstBufWR = wrBufIdx;
 
-    // RateTransition generated from: '<Root>/Adapter2' incorporates:
+    // End of RateTransition generated from: '<Root>/FOC'
+
+    // RateTransition generated from: '<S7>/SupervisorFSM_TX'
+    rtw_mutex_lock();
+    AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_k =
+      AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_h;
+    rtw_mutex_unlock();
+    switch (AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_k) {
+     case 0:
+      rtb_TmpRTBAtSupervisorFSM_TXInp =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInport4;
+      break;
+
+     case 1:
+      rtb_TmpRTBAtSupervisorFSM_TXInp =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_f;
+      break;
+
+     case 2:
+      rtb_TmpRTBAtSupervisorFSM_TXInp =
+        AMC_BLDC_DW.TmpRTBAtSupervisorFSM_TXInpor_c;
+      break;
+    }
+
+    // End of RateTransition generated from: '<S7>/SupervisorFSM_TX'
+
+    // ModelReference: '<S7>/SupervisorFSM_TX' incorporates:
+    //   Outport: '<Root>/ConfigurationParameters'
+    //   Outport: '<Root>/EstimatedData'
     //   Outport: '<Root>/Flags'
 
-    rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_hj +
-      1);
-    if (wrBufIdx == 3) {
-      wrBufIdx = 0;
-    }
+    SupervisorFSM_TXMDLOBJ7.step(AMC_BLDC_Y.Flags_p,
+      AMC_BLDC_B.RTBInsertedForAdapter_InsertedF, AMC_BLDC_Y.EstimatedData_p,
+      rtb_TmpRTBAtSupervisorFSM_TXInp, AMC_BLDC_Y.ConfigurationParameters_p,
+      AMC_BLDC_B.MessagesTx, AMC_BLDC_B.SupervisorFSM_TX_o2);
 
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_p) {
-      wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
-      if (wrBufIdx == 3) {
-        wrBufIdx = 0;
-      }
-    }
+    // ModelReference: '<S6>/CAN_Encoder' incorporates:
+    //   Outport: '<Root>/PacketsTx'
 
-    rtw_mutex_unlock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_l[wrBufIdx] = AMC_BLDC_Y.Flags_p;
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_hj = wrBufIdx;
-
-    // RateTransition generated from: '<Root>/Adapter2' incorporates:
-    //   Outport: '<Root>/ConfigurationParameters'
-
-    rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mp +
-      1);
-    if (wrBufIdx == 3) {
-      wrBufIdx = 0;
-    }
-
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3) {
-      wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
-      if (wrBufIdx == 3) {
-        wrBufIdx = 0;
-      }
-    }
-
-    rtw_mutex_unlock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF[wrBufIdx] =
-      AMC_BLDC_Y.ConfigurationParameters_p;
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mp = wrBufIdx;
-
-    // RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_jj +
-      1);
-    if (wrBufIdx == 3) {
-      wrBufIdx = 0;
-    }
-
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mb) {
-      wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
-      if (wrBufIdx == 3) {
-        wrBufIdx = 0;
-      }
-    }
-
-    rtw_mutex_unlock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m[wrBufIdx] = AMC_BLDC_B.Targets_n;
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_jj = wrBufIdx;
-
-    // RateTransition generated from: '<Root>/Adapter2' incorporates:
-    //   Outport: '<Root>/EstimatedData'
-
-    rtw_mutex_lock();
-    wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Insert_b2 +
-      1);
-    if (wrBufIdx == 3) {
-      wrBufIdx = 0;
-    }
-
-    if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_ko) {
-      wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
-      if (wrBufIdx == 3) {
-        wrBufIdx = 0;
-      }
-    }
-
-    rtw_mutex_unlock();
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_k[wrBufIdx] =
-      AMC_BLDC_Y.EstimatedData_p;
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_b2 = wrBufIdx;
+    CAN_EncoderMDLOBJ4.step(AMC_BLDC_B.MessagesTx,
+      AMC_BLDC_B.SupervisorFSM_TX_o2, AMC_BLDC_Y.PacketsTx);
 
     // Update for UnitDelay generated from: '<Root>/Adapter' incorporates:
     //   Outport: '<Root>/ConfigurationParameters'
@@ -531,22 +512,13 @@ namespace amc_bldc_codegen
     SupervisorFSM_TXMDLOBJ7.setErrorStatusPointer(rtmGetErrorStatusPointer
       ((&AMC_BLDC_M)));
 
-    // Start for RateTransition generated from: '<Root>/Adapter2'
+    // Start for RateTransition generated from: '<Root>/FOC'
     rtw_mutex_init();
 
-    // Start for RateTransition generated from: '<Root>/Adapter2'
+    // Start for RateTransition generated from: '<S7>/SupervisorFSM_RX'
     rtw_mutex_init();
 
-    // Start for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_init();
-
-    // Start for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_init();
-
-    // Start for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_init();
-
-    // Start for RateTransition generated from: '<Root>/Adapter1'
+    // Start for RateTransition generated from: '<S7>/SupervisorFSM_TX'
     rtw_mutex_init();
 
     // Start for RateTransition generated from: '<Root>/Adapter3'
@@ -574,27 +546,25 @@ namespace amc_bldc_codegen
     // SystemInitialize for ModelReference: '<S7>/SupervisorFSM_TX'
     SupervisorFSM_TXMDLOBJ7.init(&AMC_BLDC_B.MessagesTx,
       &AMC_BLDC_B.SupervisorFSM_TX_o2);
+      
+    embot::tools::Histogram::Config histcfg = {0, 90 * embot::core::time1microsec, 1 * embot::core::time1microsec};
+    embot::tools::PeriodValidator::Config pvalidatecfg = {36, 46, 20000, histcfg};
+    pvalidate.init(pvalidatecfg);
+
+    mystart = embot::core::now();
+    mystart_flag = false;
   }
 
   // Model terminate function
   void AMC_BLDC::terminate()
   {
-    // Terminate for RateTransition generated from: '<Root>/Adapter2'
+    // Terminate for RateTransition generated from: '<Root>/FOC'
     rtw_mutex_destroy();
 
-    // Terminate for RateTransition generated from: '<Root>/Adapter2'
+    // Terminate for RateTransition generated from: '<S7>/SupervisorFSM_RX'
     rtw_mutex_destroy();
 
-    // Terminate for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_destroy();
-
-    // Terminate for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_destroy();
-
-    // Terminate for RateTransition generated from: '<Root>/Adapter2'
-    rtw_mutex_destroy();
-
-    // Terminate for RateTransition generated from: '<Root>/Adapter1'
+    // Terminate for RateTransition generated from: '<S7>/SupervisorFSM_TX'
     rtw_mutex_destroy();
 
     // Terminate for RateTransition generated from: '<Root>/Adapter3'

@@ -75,7 +75,7 @@
 //    }
 //};
 
-
+static uint64_t counter_meas = 0;
 namespace embot::app::application {
 
 struct Measure
@@ -160,7 +160,7 @@ struct MeasureHisto : public Measure
     void report()
     {            
         beyond = vv->beyond;
-                    static char msg2[64];
+        static char msg2[64];
         for(int i=0; i<vv->inside.size(); i++)
         {
             if(i < vals.size())
@@ -182,7 +182,7 @@ struct MeasureHisto : public Measure
 }; // end of namespace
 
 
-constexpr bool useDUMMYforFOC {true};
+constexpr bool useDUMMYforFOC {false};
 constexpr bool useDUMMYforTICK {true};
 
 struct embot::app::application::theMBDagent::Impl
@@ -251,7 +251,7 @@ bool embot::app::application::theMBDagent::Impl::initialise()
     }
     else
     {
-        measureFOC = new MeasureHisto({0, 64*embot::core::time1microsec, 1});
+        measureFOC = new MeasureHisto({0, 100*embot::core::time1microsec, 1});
     }
     
     // create the measure for the tick
@@ -458,8 +458,9 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
     {
         return;
     }    
-        
-    impl->measureFOC->start();
+    
+    if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1)
+        impl->measureFOC->start();
     
     // 1. copy currents straight away, so that we can use them
     embot::hw::motor::Currents currs = *currents;
@@ -515,14 +516,14 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
     
     embot::hw::motor::setpwm(embot::hw::MOTOR::one, Vabc0, Vabc1, Vabc2);
    
-#define DEBUG_PARAMS // TODO: remove
+//#define DEBUG_PARAMS // TODO: remove
 #ifdef DEBUG_PARAMS
     
     static char msg2[64];
     static uint32_t counter;
     if(counter % 1000 == 0)
     {
-        sprintf(msg2, "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
+        snprintf(msg2, sizeof(msg2), "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
                                  impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
                                  Vabc0,  \
                                  Vabc1,  \
@@ -541,8 +542,10 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
 #endif
 
 #endif // #if defined(TEST_DURATION_FOC) 
-
+if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1 && counter_meas > 500000)
     impl->measureFOC->stop();
+
+counter_meas++;
 }
 
 // --------------------------------------------------------------------------------------------------------------------
