@@ -25,7 +25,7 @@ ConfigurationParameters InitConfParams = {
     0.0F,
     0.0F,
     false,
-    7U,
+    4U,
     1.0F,
     2.0F,
     500.0F,

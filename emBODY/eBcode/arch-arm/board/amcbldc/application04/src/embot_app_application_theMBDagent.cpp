@@ -544,7 +544,7 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
             //sprintf(msg2, "%d -- %d -- %.3f -- %.3f -- [%d, %d, %d]\n", mpl->foc_inputs.flags.control_mode, mpl->foc_inputs.control_outer_outputs.out_en, foc_inputs.targets.motorcurrent.current, impl->foc_outputs.foc_outputs.Iq_fbk.current,Vabc0,Vabc1,Vabc2);
             //sprintf(msg2, "%.3f -- %d -- %.3f -- %.3f -- %.3f]\n", hallGetAngle()/182.044, encoderGetCounter(), foc_inputs.targets.motorcurrent.current, impl->foc_outputs.foc_outputs.Iq_fbk.current, mpl->foc_inputs.sensors_data.motorsensors.angle);
             
-            sprintf(msg2, "%d -- %d -- %.3f -- %.3f -- %.3f]\n", delta, position, impl->foc_inputs.estimated_data.jointvelocities.velocity, impl->foc_inputs.sensors_data.motorsensors.angle, impl->foc_outputs.foc_outputs.Iq_fbk.current);
+            sprintf(msg2, "%.3f", impl->foc_outputs.foc_outputs.Iq_fbk.current);
             
             // TODO: print the current as well :) 
 

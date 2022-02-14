@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_foc'.
 //
-// Model version                  : 2.87
+// Model version                  : 2.88
 // Simulink Coder version         : 9.6 (R2021b) 14-May-2021
-// C/C++ source code generated on : Tue Feb  8 09:37:47 2022
+// C/C++ source code generated on : Thu Feb 10 09:58:07 2022
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -20,7 +20,6 @@
 #define RTW_HEADER_FOCInnerLoop_h_
 #include <cmath>
 #include "rtwtypes.h"
-#include "zero_crossing_types.h"
 #include "control_foc_types.h"
 #include "rtGetNaN.h"
 #include "rt_nonfinite.h"

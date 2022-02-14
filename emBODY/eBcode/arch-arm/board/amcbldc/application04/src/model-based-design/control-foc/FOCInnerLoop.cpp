@@ -412,7 +412,7 @@ namespace amc_bldc_codegen
     //   AlgorithmDescriptorDelegate generated from: '<S8>/a16'
 
     rty_FOCOutputs->Iq_fbk.current = rtb_IaIbIc0[1];
-
+   
     // End of Outputs for SubSystem: '<S1>/Park Transform'
 
     // Update for UnitDelay: '<S3>/Delay Input1'
