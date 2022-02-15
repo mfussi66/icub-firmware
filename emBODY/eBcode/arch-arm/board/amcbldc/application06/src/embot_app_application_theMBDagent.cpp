@@ -75,7 +75,7 @@
 //    }
 //};
 
-static uint64_t counter_meas = 0;
+//static uint64_t counter_meas = 0;
 namespace embot::app::application {
 
 struct Measure
@@ -182,7 +182,7 @@ struct MeasureHisto : public Measure
 }; // end of namespace
 
 
-constexpr bool useDUMMYforFOC {false};
+constexpr bool useDUMMYforFOC {true};
 constexpr bool useDUMMYforTICK {true};
 
 struct embot::app::application::theMBDagent::Impl
@@ -459,8 +459,8 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
         return;
     }    
     
-    if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1)
-        impl->measureFOC->start();
+    //if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1)
+    impl->measureFOC->start();
     
     // 1. copy currents straight away, so that we can use them
     embot::hw::motor::Currents currs = *currents;
@@ -516,25 +516,29 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
     
     embot::hw::motor::setpwm(embot::hw::MOTOR::one, Vabc0, Vabc1, Vabc2);
    
-//#define DEBUG_PARAMS // TODO: remove
+// #define DEBUG_PARAMS // TODO: remove
 #ifdef DEBUG_PARAMS
     
     static char msg2[64];
     static uint32_t counter;
     if(counter % 1000 == 0)
     {
-        snprintf(msg2, sizeof(msg2), "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
-                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
-                                 Vabc0,  \
-                                 Vabc1,  \
-                                 Vabc2,  \
-                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Vq,
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \
-                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.angle,    \
-                                 impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current,    \
+        snprintf(msg2, sizeof(msg2), "%d,%.3f", \
+                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, 
                                  impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Iq_fbk.current);
+                                 
+//        snprintf(msg2, sizeof(msg2), "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
+//                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
+//                                 Vabc0,  \
+//                                 Vabc1,  \
+//                                 Vabc2,  \
+//                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Vq,
+//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
+//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
+//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \
+//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.angle,    \
+//                                 impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current,    \
+//                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Iq_fbk.current);
         embot::core::print(msg2);
         counter = 0;
     }
@@ -542,10 +546,11 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
 #endif
 
 #endif // #if defined(TEST_DURATION_FOC) 
-if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1 && counter_meas > 500000)
+    
+    //if(impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current > 0.1 && counter_meas > 500000)
     impl->measureFOC->stop();
 
-counter_meas++;
+//counter_meas++;
 }
 
 // --------------------------------------------------------------------------------------------------------------------

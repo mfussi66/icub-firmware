@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 3.272
+// Model version                  : 3.274
 // Simulink Coder version         : 9.6 (R2021b) 14-May-2021
-// C/C++ source code generated on : Mon Feb 14 17:48:02 2022
+// C/C++ source code generated on : Tue Feb 15 11:56:33 2022
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -25,16 +25,15 @@
 
 // Child system includes
 #include "control_foc.h"
-#include "can_decoder.h"
 #include "estimation_velocity.h"
+#include "can_decoder.h"
 #include "SupervisorFSM_RX.h"
-#include "control_outer.h"
 #include "SupervisorFSM_TX.h"
 #include "can_encoder.h"
+#include "control_outer.h"
 #include "rtw_mutex.h"
 
 #include "embot_tools.h"
-
 
 // Macros for accessing real-time model data structure
 #ifndef rtmGetErrorStatus
@@ -94,35 +93,45 @@ namespace amc_bldc_codegen
       Targets Targets_n;               // '<S7>/SupervisorFSM_RX'
       BUS_EVENTS_RX_MULTIPLE CAN_Decoder_o2;// '<S6>/CAN_Decoder'
       BUS_CAN_RX_ERRORS_MULTIPLE CAN_Decoder_o3;// '<S6>/CAN_Decoder'
-      ControlOutputs TmpRTBAtSupervisorFSM_RXInport3;
+      ControlOutputs RTBInsertedForAdapter_Inserte_a;// '<Root>/Adapter1'
       BUS_EVENTS_TX SupervisorFSM_TX_o2;// '<S7>/SupervisorFSM_TX'
     };
 
     // Block states (default storage) for system '<Root>'
     struct DW_AMC_BLDC_T {
-      FOCSlowInputs TmpRTBAtFOCInport2_Buf[3];// synthesized block
       ConfigurationParameters ZOHBlockInsertedForAdapter_Inse;// synthesized block 
-      SensorsData RTBInsertedForAdapter_InsertedF;// synthesized block
+      ConfigurationParameters RTBInsertedForAdapter_InsertedF[3];// synthesized block 
+      SensorsData RTBInsertedForAdapter_Inserte_e;// synthesized block
       SensorsData RTBInsertedForAdapter_Inserte_c;// synthesized block
       SensorsData RTBInsertedForAdapter_Inserte_j;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_RXInport3;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_RXInpor_o;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_RXInpor_l;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_TXInport4;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_TXInpor_f;// synthesized block
-      ControlOutputs TmpRTBAtSupervisorFSM_TXInpor_c;// synthesized block
-      void* TmpRTBAtFOCInport2_SEMAPHORE;// synthesized block
-      void* TmpRTBAtSupervisorFSM_RXInpor_g;// synthesized block
-      void* TmpRTBAtSupervisorFSM_TXInpor_n;// synthesized block
+      Targets RTBInsertedForAdapter_Inserte_m[3];// synthesized block
+      ControlOutputs RTBInsertedForAdapter_Inserte_d;// synthesized block
+      ControlOutputs RTBInsertedForAdapter_Insert_j2;// synthesized block
+      ControlOutputs RTBInsertedForAdapter_Inserte_o;// synthesized block
+      ControlOuterOutputs RTBInsertedForAdapter_Inserte_i[3];// synthesized block 
+      Flags RTBInsertedForAdapter_Inserte_l[3];// synthesized block
+      EstimatedData RTBInsertedForAdapter_Inserte_k[3];// synthesized block
+      void* RTBInsertedForAdapter_Insert_mf;// synthesized block
       void* RTBInsertedForAdapter_Inserte_b;// synthesized block
-      int8_T TmpRTBAtFOCInport2_LstBufWR;// synthesized block
-      int8_T TmpRTBAtFOCInport2_RDBuf; // synthesized block
-      int8_T TmpRTBAtSupervisorFSM_RXInpo_lm;// synthesized block
-      int8_T TmpRTBAtSupervisorFSM_RXInpor_k;// synthesized block
-      int8_T TmpRTBAtSupervisorFSM_TXInpor_h;// synthesized block
-      int8_T TmpRTBAtSupervisorFSM_TXInpor_k;// synthesized block
-      int8_T RTBInsertedForAdapter_Inserte_g;// synthesized block
+      void* RTBInsertedForAdapter_Inserte_f;// synthesized block
+      void* RTBInsertedForAdapter_Insert_ey;// synthesized block
+      void* RTBInsertedForAdapter_Insert_ci;// synthesized block
+      void* RTBInsertedForAdapter_Inserte_h;// synthesized block
+      void* RTBInsertedForAdapter_Insert_bz;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_hj;// synthesized block
       int8_T RTBInsertedForAdapter_Inserte_p;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_mp;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_m3;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_b2;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_ko;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_jj;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_mb;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_p5;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_bw;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_js;// synthesized block
+      int8_T RTBInsertedForAdapter_Inserte_a;// synthesized block
+      int8_T RTBInsertedForAdapter_Inserte_g;// synthesized block
+      int8_T RTBInsertedForAdapter_Insert_pa;// synthesized block
     };
 
     // External inputs (root inport signals with default storage)
@@ -220,8 +229,8 @@ namespace amc_bldc_codegen
     RT_MODEL_AMC_BLDC_T AMC_BLDC_M;
     
     embot::tools::PeriodValidator pvalidate;
-    bool mystart_flag;
     uint64_t mystart;
+    bool mystart_flag;
   };
 }
 
