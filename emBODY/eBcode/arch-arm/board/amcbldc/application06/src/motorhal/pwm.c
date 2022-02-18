@@ -5,6 +5,7 @@
  * @date    2021 January, 19
  * @brief   PWM signals management
  **********************************************************************************************************************/
+
  
 // CODE SHAPER
 #if defined(USE_STM32HAL)
@@ -12,7 +13,7 @@
 #endif
 
  #include "embot_core.h"
- 
+
 #if defined(USE_STM32HAL) 
 // API
 #include "pwm.h"
@@ -233,76 +234,76 @@ static uint8_t updateHallStatus(void)
     uint16_t angle = hallAngleTable[hallStatus];
     
     hallAngle = angle;
-    encoderForce(angle);
+    
     // To disable the encoder reading, comment the following if then else
-//    if (!hallStatus_old)
-//    {            
-//        hallCounter = 0;
-//        
-//        encoderReset();
-//    
-//        encoderForce(angle);
-//    }
-//    else
-//    {
-//        bool forward = ((sector-sector_old+6)%6)==1;
-//        
-//        if (forward) // forward
-//        {
-//            ++hallCounter;
-//            
-//            angle -= 5461; // -30 deg
-//        }
-//        else
-//        {
-//            --hallCounter;
-//            
-//            angle += 5461; // +30 deg
-//        }
-//  
-//        if (calibration_step == 0)
-//        {
-//            encoderForce(angle);
-//            
-//            //if (hallCounter < -50 || hallCounter > 50) // > npoles*6
-//            //{
-//                // now the optical encoder is Index calibrated
-//                calibration_step = 1;
-//            //}
-//        }
-//        else if (calibration_step == 1)
-//        {
-//            encoderForce(angle);
-//            
-//            uint8_t s = forward ? sector : (sector+1)%6;
-//            
-//            border[s] = encoderGetUncalibrated();
-//            
-//            border_flag |= 1<<s;
-//            
-//            if (border_flag == 63)
-//            {
-//                calibration_step = 2;
-//                
-//                int32_t offset = int16_t(border[0]);
-//                offset += int16_t(border[1]-10923);
-//                offset += int16_t(border[2]-21845);
-//                offset += int16_t(border[3]-32768);
-//                offset += int16_t(border[4]-43691);
-//                offset += int16_t(border[5]-54613);
-//                
-//                offset /= 6;
-//                     
-//                embot::core::print("CALIBRATED\n");
-//            
-//                encoderCalibrate(-int16_t(offset));
-//            }
-//        }
-//        //else if (calibration_step == 2)
-//        //{   
-//        //    encoderCalibrate(angle);
-//        //}
-//    }
+    if (!hallStatus_old)
+    {            
+        hallCounter = 0;
+        
+        encoderReset();
+    
+        encoderForce(angle);
+    }
+    else
+    {
+        bool forward = ((sector-sector_old+6)%6)==1;
+        
+        if (forward) // forward
+        {
+            ++hallCounter;
+            
+            angle -= 5461; // -30 deg
+        }
+        else
+        {
+            --hallCounter;
+            
+            angle += 5461; // +30 deg
+        }
+  
+        if (calibration_step == 0)
+        {
+            encoderForce(angle);
+            
+            //if (hallCounter < -50 || hallCounter > 50) // > npoles*6
+            //{
+                // now the optical encoder is Index calibrated
+                calibration_step = 1;
+            //}
+        }
+        else if (calibration_step == 1)
+        {
+            encoderForce(angle);
+            
+            uint8_t s = forward ? sector : (sector+1)%6;
+            
+            border[s] = encoderGetUncalibrated();
+            
+            border_flag |= 1<<s;
+            
+            if (border_flag == 63)
+            {
+                calibration_step = 2;
+                
+                int32_t offset = int16_t(border[0]);
+                offset += int16_t(border[1]-10923);
+                offset += int16_t(border[2]-21845);
+                offset += int16_t(border[3]-32768);
+                offset += int16_t(border[4]-43691);
+                offset += int16_t(border[5]-54613);
+                
+                offset /= 6;
+                     
+                embot::core::print("CALIBRATED\n");
+            
+                encoderCalibrate(-int16_t(offset));
+            }
+        }
+        //else if (calibration_step == 2)
+        //{   
+        //    encoderCalibrate(angle);
+        //}
+    }
 
     // update the old sector and hall status
     sector_old = sector;
@@ -602,7 +603,7 @@ void pwmSet(uint16_t u, uint16_t v, uint16_t w)
     if (u > (uint16_t)MAX_PWM) u = MAX_PWM;
     if (v > (uint16_t)MAX_PWM) v = MAX_PWM;
     if (w > (uint16_t)MAX_PWM) w = MAX_PWM;
-    
+    /* Update PWM generators */
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, u);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, v);
     __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, w);

@@ -98,7 +98,7 @@ HAL_StatusTypeDef encoderInit(void)
     htim2.Instance = TIM2;
     htim2.Init.Prescaler = 0;
     htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim2.Init.Period = MainConf.encoder.nsteps - 1;
+    htim2.Init.Period = (MainConf.encoder.nsteps / 4) - 1;
     htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
     sConfig.EncoderMode = MainConf.encoder.mode;
@@ -164,9 +164,9 @@ void encoderReset()
  */
 uint16_t encoderGetElectricalAngle(void)
 {
-    //if (encoderCalibrated) return electricalOffset + (__HAL_TIM_GET_COUNTER(&htim2) * encoderConvFactor) & 0xFFFF; // comment to take always the forced value
+    if (encoderCalibrated) return electricalOffset + (__HAL_TIM_GET_COUNTER(&htim2) * encoderConvFactor) & 0xFFFF;
     
-    return encoderForcedValue; /*+ 300.0 * 65536.0 / 360.0;*/
+    return encoderForcedValue;
 }
 
 uint16_t encoderGetUncalibrated(void)
