@@ -50,7 +50,7 @@
 /* Coversion factor from encoder step value to elctrical angle. It is given by:
  * encoderConvFactor = 65536 * number_of_poles / number_of_encoder_steps
  */
-static const int16_t encoderConvFactor = 16;
+static const int16_t encoderConvFactor = 112;
 static volatile uint16_t electricalOffset = 0;
 static volatile bool encoderCalibrated = false;
 static volatile uint16_t encoderForcedValue = 0;
@@ -187,9 +187,9 @@ void encoderForce(uint16_t value)
 
 void encoderCalibrate(uint16_t offset)
 {
-    char msg[32];
+    char msg[64];
     
-    sprintf(msg,"offset=%d\n",offset);
+    snprintf(msg, sizeof(msg), "Encoder calibration offset=%d\n", offset);
     
     embot::core::print(msg);
     

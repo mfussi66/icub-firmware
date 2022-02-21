@@ -482,29 +482,25 @@ void embot::app::application::theMBDagent::Impl::onCurrents_FOC_innerloop(void *
     
     embot::hw::motor::setpwm(embot::hw::MOTOR::one, Vabc0, Vabc1, Vabc2);
    
-// #define DEBUG_PARAMS // TODO: remove
+#define DEBUG_PARAMS // TODO: remove
 #ifdef DEBUG_PARAMS
     
     static char msg2[64];
     static uint32_t counter;
     if(counter % 1000 == 0)
-    {
-        snprintf(msg2, sizeof(msg2), "%d,%.3f", \
-                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, 
+    {                   
+        snprintf(msg2, sizeof(msg2), "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
+                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
+                                 Vabc0,  \
+                                 Vabc1,  \
+                                 Vabc2,  \
+                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Vq,
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \
+                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.angle,    \
+                                 impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current,    \
                                  impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Iq_fbk.current);
-                                 
-//        snprintf(msg2, sizeof(msg2), "%d %d,%d,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f", \
-//                                 impl->amc_bldc.AMC_BLDC_Y.Flags_p.control_mode, \
-//                                 Vabc0,  \
-//                                 Vabc1,  \
-//                                 Vabc2,  \
-//                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Vq,
-//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[0],  \
-//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[1],  \
-//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.Iabc[2],  \
-//                                 impl->amc_bldc.AMC_BLDC_U.SensorsData_p.motorsensors.angle,    \
-//                                 impl->amc_bldc.AMC_BLDC_B.Targets_n.motorcurrent.current,    \
-//                                 impl->amc_bldc.AMC_BLDC_Y.ControlOutputs_p.Iq_fbk.current);
         embot::core::print(msg2);
         counter = 0;
     }

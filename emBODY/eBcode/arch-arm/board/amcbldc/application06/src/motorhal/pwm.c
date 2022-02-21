@@ -53,7 +53,7 @@
 #endif
 
 #define USE_HALL_SENSORS    1
-//#define USE_ENCODER_SENSORS 1
+// #define USE_ENCODER_SENSORS 1
 
 
 /* Private macros *****************************************************************************************************/
@@ -235,7 +235,11 @@ static uint8_t updateHallStatus(void)
     
     hallAngle = angle;
     
+#ifdef USE_HALL_SENSORS
+    encoderForce(angle);
+    
     // To disable the encoder reading, comment the following if then else
+#else
     if (!hallStatus_old)
     {            
         hallCounter = 0;
@@ -294,7 +298,7 @@ static uint8_t updateHallStatus(void)
                 
                 offset /= 6;
                      
-                embot::core::print("CALIBRATED\n");
+                embot::core::print("Encoder Calibrated\n");
             
                 encoderCalibrate(-int16_t(offset));
             }
@@ -304,6 +308,8 @@ static uint8_t updateHallStatus(void)
         //    encoderCalibrate(angle);
         //}
     }
+    
+#endif
 
     // update the old sector and hall status
     sector_old = sector;
