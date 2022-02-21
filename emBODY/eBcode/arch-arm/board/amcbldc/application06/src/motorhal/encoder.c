@@ -66,7 +66,7 @@ static volatile uint16_t encoderForcedValue = 0;
 void encoderIndexCallback(TIM_HandleTypeDef *htim)
 {
     //++encoderIndex;
-    embot::core::print("Index!!!");
+    //embot::core::print("Index!!!");
 }
 
 
@@ -88,7 +88,7 @@ HAL_StatusTypeDef encoderInit(void)
         MainConf.encoder.mode   = TIM_ENCODERMODE_TI12;
         MainConf.encoder.filter = 4;
         MainConf.encoder.idxpos = TIM_ENCODERINDEX_POSITION_00;
-        MainConf.encoder.nsteps = 16000; //14400; //1024;
+        MainConf.encoder.nsteps = 4096;
     }
 
     /* Forced, for now */
@@ -98,7 +98,7 @@ HAL_StatusTypeDef encoderInit(void)
     htim2.Instance = TIM2;
     htim2.Init.Prescaler = 0;
     htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim2.Init.Period = (MainConf.encoder.nsteps / 4) - 1;
+    htim2.Init.Period = (MainConf.encoder.nsteps / 7) - 1;
     htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
     sConfig.EncoderMode = MainConf.encoder.mode;
@@ -106,7 +106,7 @@ HAL_StatusTypeDef encoderInit(void)
     sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
     sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
     sConfig.IC1Filter = MainConf.encoder.filter;
-    sConfig.IC2Polarity = /*TIM_ICPOLARITY_FALLING;*/TIM_ICPOLARITY_RISING;
+    sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;  /*TIM_ICPOLARITY_FALLING;*/
     sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
     sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
     sConfig.IC2Filter = MainConf.encoder.filter;
@@ -118,7 +118,7 @@ HAL_StatusTypeDef encoderInit(void)
     if (HAL_OK != HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig)) return HAL_ERROR;
 
     /* Configure the INDEX mode */
-    /*
+    
     sEncoderIndexConfig.Polarity = TIM_ENCODERINDEX_POLARITY_NONINVERTED;
     sEncoderIndexConfig.Prescaler = TIM_ENCODERINDEX_PRESCALER_DIV1;
     sEncoderIndexConfig.Filter = MainConf.encoder.filter;
@@ -126,11 +126,11 @@ HAL_StatusTypeDef encoderInit(void)
     sEncoderIndexConfig.Position = MainConf.encoder.idxpos;
     sEncoderIndexConfig.Direction = TIM_ENCODERINDEX_DIRECTION_UP_DOWN;
     if (HAL_OK != HAL_TIMEx_ConfigEncoderIndex(&htim2, &sEncoderIndexConfig)) return HAL_ERROR;
-    */
+    
     /* Register the callback function used to signal the activation of the Index pulse */
-    //if (HAL_OK != HAL_TIM_RegisterCallback(&htim2, HAL_TIM_ENCODER_INDEX_CB_ID, encoderIndexCallback)) return HAL_ERROR;
+    if (HAL_OK != HAL_TIM_RegisterCallback(&htim2, HAL_TIM_ENCODER_INDEX_CB_ID, encoderIndexCallback)) return HAL_ERROR;
 
-    HAL_TIMEx_DisableEncoderIndex(&htim2);
+    //HAL_TIMEx_DisableEncoderIndex(&htim2);
 
     /* Start timers in encoder mode */
     if (HAL_OK != HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL)) return HAL_ERROR;

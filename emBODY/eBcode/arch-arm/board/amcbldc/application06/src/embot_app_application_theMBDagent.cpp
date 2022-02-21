@@ -41,40 +41,6 @@
 // - pimpl: private implementation (see scott meyers: item 22 of effective modern c++, item 31 of effective c++
 // --------------------------------------------------------------------------------------------------------------------
 
-
-//class Performance{
-//    public:
-//    inline static real32_T curr_ = 0;
-//    inline static std::vector<real32_T> acc_{};
-//        
-//    Performance()
-//    {
-//        curr_ = static_cast<real32_T>(embot::core::now());
-//    }
-//    
-//    ~Performance()
-//    {
-//        real32_T now = static_cast<real32_T>(embot::core::now());
-//        real32_T value_ =  now - curr_;
-//        acc_.push_back(value_);
-//                
-//        if (acc_.size() >= 3000)
-//        {
-//            real32_T avg = 0;
-//            for (real32_T c : acc_)
-//            {
-//                avg += c;
-//            }
-//            avg = avg / 3000.0;
-//            char msg6[6];
-//            
-//            sprintf(msg6, "%.3f", avg);
-//            embot::core::print(msg6);
-//            acc_.clear();
-//        }
-//    }
-//};
-
 //static uint64_t counter_meas = 0;
 namespace embot::app::application {
 
