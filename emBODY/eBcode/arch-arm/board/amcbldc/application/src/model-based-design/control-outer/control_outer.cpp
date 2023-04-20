@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_outer'.
 //
-// Model version                  : 5.2
+// Model version                  : 5.3
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Thu Apr  6 14:46:44 2023
+// C/C++ source code generated on : Thu Apr 20 11:54:02 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -88,6 +88,7 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
   real32_T rtb_PProdOut;
   real32_T rtb_PProdOut_o;
   real32_T rtb_Product;
+  real32_T rtb_Switch2;
   real32_T rtb_Switch2_f;
   boolean_T rtb_Compare;
   boolean_T rtb_Compare_m;
@@ -127,6 +128,15 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
 
   rtb_FixPtRelationalOperator = (rtu_Flags->control_mode !=
     control_outer_DW.DelayInput1_DSTATE);
+
+  // Switch: '<Root>/Switch2'
+  if (rtu_Flags->enable_thermal_protection) {
+    rtb_Switch2 = rtu_ConfigurationParameters->thresholds.motorNominalCurrents;
+  } else {
+    rtb_Switch2 = rtu_ConfigurationParameters->thresholds.motorPeakCurrents;
+  }
+
+  // End of Switch: '<Root>/Switch2'
 
   // Sum: '<S3>/Sum3'
   rtb_DenCoefOut = rtu_Targets->jointpositions.position -
@@ -398,31 +408,32 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
   // End of Switch: '<Root>/Switch1'
 
   // Switch: '<S5>/Switch2' incorporates:
-  //   Gain: '<Root>/Gain1'
   //   RelationalOperator: '<S5>/LowerRelop1'
-  //   RelationalOperator: '<S5>/UpperRelop'
-  //   Switch: '<S5>/Switch'
 
-  if (rtb_Abs > rtu_ConfigurationParameters->thresholds.motorPeakCurrents) {
-    rtb_Abs = rtu_ConfigurationParameters->thresholds.motorPeakCurrents;
-  } else if (rtb_Abs <
-             -rtu_ConfigurationParameters->thresholds.motorPeakCurrents) {
+  if (!(rtb_Abs > rtb_Switch2)) {
+    // Gain: '<Root>/Gain1'
+    rtb_Switch2 = -rtb_Switch2;
+
     // Switch: '<S5>/Switch' incorporates:
-    //   Gain: '<Root>/Gain1'
+    //   RelationalOperator: '<S5>/UpperRelop'
 
-    rtb_Abs = -rtu_ConfigurationParameters->thresholds.motorPeakCurrents;
+    if (!(rtb_Abs < rtb_Switch2)) {
+      rtb_Switch2 = rtb_Abs;
+    }
+
+    // End of Switch: '<S5>/Switch'
   }
 
   // End of Switch: '<S5>/Switch2'
 
   // BusCreator: '<Root>/Bus Creator2'
-  rty_OuterOutputs->motorcurrent.current = rtb_Abs;
+  rty_OuterOutputs->motorcurrent.current = rtb_Switch2;
 
   // Sum: '<S1>/Sum' incorporates:
   //   Abs: '<S1>/Abs1'
 
-  rtb_DenCoefOut = rtu_ConfigurationParameters->thresholds.motorPeakCurrents -
-    std::abs(rtu_Estimates->Iq_filtered.current);
+  rtb_Abs = rtu_ConfigurationParameters->thresholds.motorPeakCurrents - std::abs
+    (rtu_Estimates->Iq_filtered.current);
 
   // CombinatorialLogic: '<S9>/Logic' incorporates:
   //   Constant: '<S7>/Constant'
@@ -432,10 +443,10 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
   //   RelationalOperator: '<S1>/Relational Operator'
   //   RelationalOperator: '<S7>/Compare'
 
-  rowIdx = static_cast<int32_T>(((((rtb_DenCoefOut > 0.1F *
+  rowIdx = static_cast<int32_T>(((((rtb_Abs > 0.1F *
     rtu_ConfigurationParameters->thresholds.motorPeakCurrents) ||
-    rtb_FixPtRelationalOperator) + (static_cast<uint32_T>(rtb_DenCoefOut <= 0.0F)
-    << 1)) << 1) + control_outer_DW.Memory_PreviousInput);
+    rtb_FixPtRelationalOperator) + (static_cast<uint32_T>(rtb_Abs <= 0.0F) << 1))
+    << 1) + control_outer_DW.Memory_PreviousInput);
   rtb_Compare = rtCP_Logic_table[static_cast<uint32_T>(rowIdx) + 8U];
 
   // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
@@ -449,7 +460,7 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
     control_outer_B.DiscreteTimeIntegrator = 0.0F;
   } else {
     // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
-    control_outer_B.DiscreteTimeIntegrator = 0.0005F * rtb_DenCoefOut +
+    control_outer_B.DiscreteTimeIntegrator = 0.0005F * rtb_Abs +
       control_outer_DW.DiscreteTimeIntegrator_DSTATE;
   }
 
@@ -520,7 +531,7 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
     control_outer_DW.FilterDifferentiatorTF_tmp_p;
 
   // Update for UnitDelay: '<Root>/Unit Delay1'
-  control_outer_DW.UnitDelay1_DSTATE = rtb_Abs;
+  control_outer_DW.UnitDelay1_DSTATE = rtb_Switch2;
 
   // Update for DiscreteIntegrator: '<S154>/Integrator' incorporates:
   //   DiscreteIntegrator: '<S54>/Integrator'
@@ -537,7 +548,7 @@ void control_outer(const Flags *rtu_Flags, const ConfigurationParameters
 
   // Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
   control_outer_DW.DiscreteTimeIntegrator_SYSTEM_E = 0U;
-  control_outer_DW.DiscreteTimeIntegrator_DSTATE = 0.0005F * rtb_DenCoefOut +
+  control_outer_DW.DiscreteTimeIntegrator_DSTATE = 0.0005F * rtb_Abs +
     control_outer_B.DiscreteTimeIntegrator;
   control_outer_DW.DiscreteTimeIntegrator_PrevRese = static_cast<int8_T>
     (rtb_Compare);

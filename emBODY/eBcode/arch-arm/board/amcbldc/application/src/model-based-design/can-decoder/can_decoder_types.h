@@ -9,7 +9,7 @@
 //
 // Model version                  : 4.0
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Thu Apr  6 14:46:19 2023
+// C/C++ source code generated on : Thu Apr 20 11:53:34 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -101,6 +101,10 @@ struct MotorConfig
   real32_T Imax;
   real32_T Vcc;
   real32_T Vmax;
+  real32_T resistance;
+  real32_T inductance;
+  real32_T thermal_resistance;
+  real32_T thermal_time_constant;
 };
 
 #endif
@@ -193,6 +197,9 @@ struct Thresholds
   // Max value is 32000
   // Can be only non-negative
   uint32_T motorPwmLimit;
+
+  // The critical temperature of the motor that triggers i2t current protection. 
+  real32_T motorCriticalTemperature;
 };
 
 #endif
@@ -209,6 +216,7 @@ struct ConfigurationParameters
   PIDConfig VelLoopPID;
   PIDConfig DirLoopPID;
   Thresholds thresholds;
+  real32_T environment_temperature;
 };
 
 #endif

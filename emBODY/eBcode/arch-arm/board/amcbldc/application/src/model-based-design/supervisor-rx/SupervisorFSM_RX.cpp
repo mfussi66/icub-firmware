@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_RX'.
 //
-// Model version                  : 5.9
+// Model version                  : 6.3
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Thu Apr  6 14:45:52 2023
+// C/C++ source code generated on : Thu Apr 20 11:53:05 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -21,8 +21,8 @@
 #include "SupervisorFSM_RX_types.h"
 #include <cmath>
 #include "rt_roundd_snf.h"
-#include "rtw_defines.h"
 #include "SupervisorFSM_RX_private.h"
+#include "rtw_defines.h"
 
 // Named constants for Chart: '<S2>/ControlMode_SM_motor0'
 const uint8_T SupervisorFSM_RX_IN_Current = 1U;
@@ -828,6 +828,7 @@ void SupervisorFS_LimitsHandler_Init(void)
   SupervisorFSM_RX_B.thresholds.motorPeakCurrents = 0.0F;
   SupervisorFSM_RX_B.thresholds.motorOverloadCurrents = 0.0F;
   SupervisorFSM_RX_B.thresholds.motorPwmLimit = 0U;
+  SupervisorFSM_RX_B.thresholds.motorCriticalTemperature = 0.0F;
 }
 
 // Output and update for function-call system: '<Root>/Limits Handler'
@@ -1083,6 +1084,10 @@ void Supervis_CANMessageHandler_Init(void)
   SupervisorFSM_RX_B.motorConfig.Imax = 0.0F;
   SupervisorFSM_RX_B.motorConfig.Vcc = 0.0F;
   SupervisorFSM_RX_B.motorConfig.Vmax = 0.0F;
+  SupervisorFSM_RX_B.motorConfig.resistance = 0.0F;
+  SupervisorFSM_RX_B.motorConfig.inductance = 0.0F;
+  SupervisorFSM_RX_B.motorConfig.thermal_resistance = 0.0F;
+  SupervisorFSM_RX_B.motorConfig.thermal_time_constant = 0.0F;
   SupervisorFSM_RX_B.estimationConfig.velocity_mode =
     EstimationVelocityModes_Disabled;
 
@@ -1285,8 +1290,11 @@ void SupervisorFSM_RX_Init(Flags *rty_Flags, ConfigurationParameters
   rty_Flags->enable_sending_msg_status =
     SupervisorFSM_RX_B.enableSendingMsgStatus;
   rty_Flags->fault_button = false;
+  rty_Flags->enable_thermal_protection = SupervisorFSM_RX_ConstB.Constant5;
 
-  // SystemInitialize for BusCreator: '<Root>/Bus Creator1'
+  // SystemInitialize for BusCreator: '<Root>/Bus Creator1' incorporates:
+  //   Constant: '<Root>/Constant4'
+
   rty_ConfigurationParameters->motorconfig = SupervisorFSM_RX_B.motorConfig;
   rty_ConfigurationParameters->estimationconfig =
     SupervisorFSM_RX_B.estimationConfig;
@@ -1295,6 +1303,8 @@ void SupervisorFSM_RX_Init(Flags *rty_Flags, ConfigurationParameters
   rty_ConfigurationParameters->VelLoopPID = SupervisorFSM_RX_B.VelocityPID;
   rty_ConfigurationParameters->DirLoopPID = SupervisorFSM_RX_B.OpenLoopPID;
   rty_ConfigurationParameters->thresholds = SupervisorFSM_RX_B.thresholds;
+  rty_ConfigurationParameters->environment_temperature =
+    InitConfParams.environment_temperature;
 }
 
 // Output and update for referenced model: 'SupervisorFSM_RX'
@@ -1478,8 +1488,11 @@ void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const ExternalFlags
   rty_Flags->enable_sending_msg_status =
     SupervisorFSM_RX_B.enableSendingMsgStatus;
   rty_Flags->fault_button = SupervisorFSM_RX_B.isFaultButtonPressed;
+  rty_Flags->enable_thermal_protection = SupervisorFSM_RX_ConstB.Constant5;
 
-  // BusCreator: '<Root>/Bus Creator1'
+  // BusCreator: '<Root>/Bus Creator1' incorporates:
+  //   Constant: '<Root>/Constant4'
+
   rty_ConfigurationParameters->motorconfig = SupervisorFSM_RX_B.motorConfig;
   rty_ConfigurationParameters->estimationconfig =
     SupervisorFSM_RX_B.estimationConfig;
@@ -1488,6 +1501,8 @@ void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const ExternalFlags
   rty_ConfigurationParameters->VelLoopPID = SupervisorFSM_RX_B.VelocityPID;
   rty_ConfigurationParameters->DirLoopPID = SupervisorFSM_RX_B.OpenLoopPID;
   rty_ConfigurationParameters->thresholds = SupervisorFSM_RX_B.thresholds;
+  rty_ConfigurationParameters->environment_temperature =
+    InitConfParams.environment_temperature;
 
   // Switch: '<Root>/Switch2' incorporates:
   //   BusCreator: '<Root>/Bus Creator2'
