@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_TX'.
 //
-// Model version                  : 6.1
+// Model version                  : 6.2
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Thu Apr 20 11:53:25 2023
+// C/C++ source code generated on : Fri Apr 21 11:46:17 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -402,6 +402,7 @@ struct BUS_MSG_STATUS
   real32_T pwm_fbk;
   real32_T temperature;
   BUS_FLAGS_TX flags;
+  real_T direct_current;
 };
 
 #endif

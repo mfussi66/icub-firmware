@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_TX'.
 //
-// Model version                  : 6.1
+// Model version                  : 6.2
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Thu Apr 20 11:53:25 2023
+// C/C++ source code generated on : Fri Apr 21 11:46:17 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -110,6 +110,7 @@ void SupervisorFSM_TX_Init(BUS_MESSAGES_TX *rty_MessagesTx)
   rty_MessagesTx->status.flags.SiliconRevisionFault = false;
   rty_MessagesTx->status.flags.PositionLimitUpper = false;
   rty_MessagesTx->status.flags.PositionLimitLower = false;
+  rty_MessagesTx->status.direct_current = 0.0;
 }
 
 // Output and update for referenced model: 'SupervisorFSM_TX'
@@ -131,6 +132,7 @@ void SupervisorFSM_TX(const SensorsData *rtu_SensorsData, const EstimatedData
     rty_MessagesTx->status.pwm_fbk = rtu_ControlOutputs->Vq;
     rty_MessagesTx->status.temperature =
       rtu_EstimatedData->motor_temperature.temperature;
+    rty_MessagesTx->status.direct_current = rtu_ControlOutputs->Id_fbk.current;
     rty_MessagesTx->status.flags.ExternalFaultAsserted = rtu_Flags->fault_button;
     SupervisorFSM_TX_DW.ev_statusEventCounter++;
   }

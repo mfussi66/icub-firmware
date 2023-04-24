@@ -449,19 +449,22 @@ bool embot::app::application::theMBDagent::Impl::tick(std::vector<embot::prot::c
     
     AMC_BLDC_step_Time_1ms();
     
-    
-    
     // -----------------------------------------------------------------------------
     // Thermal Model Step Function (10 ms)
     // -----------------------------------------------------------------------------
-    static uint8_t counter_Ts_10ms = 0;
     
-    if(++counter_Ts_10ms % 10 == 0)
+    static uint8_t counter_Ts_10ms = 1;
+    
+    if(counter_Ts_10ms == 10)
     {
         AMC_BLDC_step_Time_10ms();
         counter_Ts_10ms = 0;
     }
-    
+    else 
+    {
+       counter_Ts_10ms++;
+    }
+
     // if there an output is available, send it to the CAN Netowork
     for (uint8_t i = 0; i < CAN_MAX_NUM_PACKETS; i++)
     {
