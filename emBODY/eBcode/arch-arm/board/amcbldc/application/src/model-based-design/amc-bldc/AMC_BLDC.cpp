@@ -60,7 +60,7 @@ ConfigurationParameters InitConfParams = {
     24.0F,
     25.9F,
     271.0F,
-    56.0F,
+    49.0F,
     270.0F
   },
 
