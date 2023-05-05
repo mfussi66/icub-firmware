@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'can_encoder'.
 //
-// Model version                  : 5.5
+// Model version                  : 5.6
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:16:39 2023
+// C/C++ source code generated on : Fri May  5 17:34:15 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -60,10 +60,9 @@ void can_encoder(const BUS_MESSAGES_TX *rtu_messages_tx, const BUS_STATUS_TX
 
   // Outputs for Atomic SubSystem: '<Root>/CAN_Encoder'
   // DataTypeConversion: '<S4>/Data Type Conversion1' incorporates:
-  //   Constant: '<S4>/length1'
-  //   Product: '<S4>/Product1'
+  //   Gain: '<S4>/Gain1'
 
-  tmp_0 = rtu_messages_tx->status.temperature * 10.0F;
+  tmp_0 = 1000.0F * rtu_messages_tx->status.temperature;
   if (tmp_0 < 32768.0F) {
     if (tmp_0 >= -32768.0F) {
       rtb_DataTypeConversion1_0 = static_cast<int16_T>(tmp_0);
