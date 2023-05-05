@@ -88,6 +88,15 @@
                 "*.cpp",
                 "*.h"
             ]
+        },
+        {
+            "source_directory": "thermal_model",
+            "source_directory_parent": "ert",
+            "target_directory": "thermal-model",            
+            "files": [
+                "*.cpp",
+                "*.h"
+            ]
         }
     ]
 }

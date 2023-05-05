@@ -9,7 +9,7 @@
 //
 // Model version                  : 6.15
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri Apr 21 11:47:39 2023
+// C/C++ source code generated on : Fri May  5 17:17:42 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -60,7 +60,7 @@ ConfigurationParameters InitConfParams = {
     24.0F,
     25.9F,
     271.0F,
-    49.0F,
+    56.0F,
     270.0F
   },
 
@@ -219,7 +219,7 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
     AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_i[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_bw];
 
   // ModelReference: '<Root>/FOC' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element6'
+  //   Inport generated from: '<Root>/In Bus Element5'
   //   Outport generated from: '<Root>/Out Bus Element'
 
   control_foc(&AMC_BLDC_U.SensorsData_p,
@@ -262,7 +262,7 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
   // End of RateTransition generated from: '<Root>/Adapter1'
 
   // RateTransition generated from: '<Root>/Adapter3' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element6'
+  //   Inport generated from: '<Root>/In Bus Element5'
 
   rtw_mutex_lock();
   wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_g + 1);
@@ -749,6 +749,9 @@ void AMC_BLDC_initialize(void)
   // Start for RateTransition generated from: '<S5>/Adapter'
   rtw_mutex_init();
 
+  // SystemInitialize for ModelReference: '<S5>/Estimation_Temperature'
+  thermal_model_Init();
+
   // SystemInitialize for ModelReference: '<S5>/Estimation_Velocity'
   estimation_velocity_Init();
 
@@ -756,7 +759,7 @@ void AMC_BLDC_initialize(void)
   filter_current_Init();
 
   // SystemInitialize for ModelReference: '<Root>/FOC' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element6'
+  //   Inport generated from: '<Root>/In Bus Element5'
   //   Outport generated from: '<Root>/Out Bus Element'
 
   control_foc_Init();
@@ -829,6 +832,9 @@ void AMC_BLDC_terminate(void)
 
   // Terminate for RateTransition generated from: '<S5>/Adapter'
   rtw_mutex_destroy();
+
+  // Terminate for ModelReference: '<S5>/Estimation_Temperature'
+  thermal_model_Term();
 }
 
 //
