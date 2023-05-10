@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_RX'.
 //
-// Model version                  : 6.3
+// Model version                  : 6.7
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:33:59 2023
+// C/C++ source code generated on : Tue May  9 10:44:20 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -21,8 +21,8 @@
 #include "SupervisorFSM_RX_types.h"
 #include <cmath>
 #include "rt_roundd_snf.h"
-#include "SupervisorFSM_RX_private.h"
 #include "rtw_defines.h"
+#include "SupervisorFSM_RX_private.h"
 
 // Named constants for Chart: '<S2>/ControlMode_SM_motor0'
 const uint8_T SupervisorFSM_RX_IN_Current = 1U;
@@ -1277,20 +1277,12 @@ static boolean_T SupervisorFSM_isBoardConfigured(void)
 }
 
 // System initialize for referenced model: 'SupervisorFSM_RX'
-void SupervisorFSM_RX_Init(Flags *rty_Flags, ConfigurationParameters
-  *rty_ConfigurationParameters)
+void SupervisorFSM_RX_Init(ConfigurationParameters *rty_ConfigurationParameters)
 {
   // SystemInitialize for Chart: '<Root>/SupervisorRX State Handler' incorporates:
   //   SubSystem: '<Root>/CAN Message Handler'
 
   Supervis_CANMessageHandler_Init();
-
-  // SystemInitialize for BusCreator: '<Root>/Bus Creator'
-  rty_Flags->control_mode = SupervisorFSM_RX_B.controlModeDefined;
-  rty_Flags->enable_sending_msg_status =
-    SupervisorFSM_RX_B.enableSendingMsgStatus;
-  rty_Flags->fault_button = false;
-  rty_Flags->enable_thermal_protection = SupervisorFSM_RX_ConstB.Constant5;
 
   // SystemInitialize for BusCreator: '<Root>/Bus Creator1' incorporates:
   //   Constant: '<Root>/Constant4'
@@ -1317,6 +1309,7 @@ void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const ExternalFlags
                       Targets *rty_Targets, ConfigurationParameters
                       *rty_ConfigurationParameters)
 {
+  real32_T rtb_UnitDelay_thresholds_motorC;
   real32_T rtb_UnitDelay_thresholds_motorO;
   SupervisorFSM_R_rtu_SensorsData = rtu_SensorsData;
   SupervisorFS_rtu_ControlOutputs = rtu_ControlOutputs;
@@ -1327,6 +1320,8 @@ void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const ExternalFlags
   // UnitDelay: '<Root>/Unit Delay'
   rtb_UnitDelay_thresholds_motorO =
     SupervisorFSM_RX_DW.UnitDelay_DSTATE.thresholds.motorOverloadCurrents;
+  rtb_UnitDelay_thresholds_motorC =
+    SupervisorFSM_RX_DW.UnitDelay_DSTATE.thresholds.motorCriticalTemperature;
 
   // Chart: '<Root>/SupervisorRX State Handler' incorporates:
   //   UnitDelay: '<Root>/Unit Delay'
@@ -1483,12 +1478,18 @@ void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const ExternalFlags
 
   // End of Chart: '<Root>/SupervisorRX State Handler'
 
+  // RelationalOperator: '<S7>/Relational Operator' incorporates:
+  //   UnitDelay: '<Root>/Unit Delay'
+
+  rty_Flags->enable_thermal_protection =
+    (rtu_EstimatedData->motor_temperature.temperature >
+     rtb_UnitDelay_thresholds_motorC);
+
   // BusCreator: '<Root>/Bus Creator'
   rty_Flags->control_mode = SupervisorFSM_RX_B.controlModeDefined;
   rty_Flags->enable_sending_msg_status =
     SupervisorFSM_RX_B.enableSendingMsgStatus;
   rty_Flags->fault_button = SupervisorFSM_RX_B.isFaultButtonPressed;
-  rty_Flags->enable_thermal_protection = SupervisorFSM_RX_ConstB.Constant5;
 
   // BusCreator: '<Root>/Bus Creator1' incorporates:
   //   Constant: '<Root>/Constant4'

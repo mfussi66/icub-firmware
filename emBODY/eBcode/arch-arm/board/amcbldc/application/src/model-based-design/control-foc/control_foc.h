@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_foc'.
 //
-// Model version                  : 5.8
+// Model version                  : 5.12
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:23 2023
+// C/C++ source code generated on : Tue May  9 10:44:57 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -20,6 +20,7 @@
 #define RTW_HEADER_control_foc_h_
 #include "rtwtypes.h"
 #include "control_foc_types.h"
+#include "FOCInnerLoop.h"
 
 extern "C"
 {
@@ -34,11 +35,13 @@ extern "C"
 #ifndef control_foc_MDLREF_HIDE_CHILD_
 
 struct B_control_foc_c_T {
-  real32_T SumI1;                      // '<S109>/SumI1'
-  real32_T Integrator;                 // '<S97>/Integrator'
-  real32_T Switch;                     // '<S33>/Switch'
-  real32_T Integrator_j;               // '<S45>/Integrator'
+  real32_T SumI1;                      // '<S110>/SumI1'
+  real32_T Integrator;                 // '<S98>/Integrator'
+  real32_T Switch;                     // '<S34>/Switch'
+  real32_T Integrator_j;               // '<S46>/Integrator'
   real32_T Sum3;                       // '<S1>/Sum3'
+  B_MovingRMS_control_foc_T MovingRMS1;// '<S3>/Moving RMS'
+  B_MovingRMS_control_foc_T MovingRMS; // '<S3>/Moving RMS'
 };
 
 #endif                                 //control_foc_MDLREF_HIDE_CHILD_
@@ -47,15 +50,17 @@ struct B_control_foc_c_T {
 #ifndef control_foc_MDLREF_HIDE_CHILD_
 
 struct DW_control_foc_f_T {
-  real32_T FilterDifferentiatorTF_states;// '<S90>/Filter Differentiator TF'
+  real32_T FilterDifferentiatorTF_states;// '<S91>/Filter Differentiator TF'
   real32_T UnitDelay_DSTATE;           // '<S1>/Unit Delay'
-  real32_T Integrator_DSTATE;          // '<S97>/Integrator'
-  real32_T FilterDifferentiatorTF_states_k;// '<S38>/Filter Differentiator TF'
-  real32_T Integrator_DSTATE_o;        // '<S45>/Integrator'
-  real32_T FilterDifferentiatorTF_tmp; // '<S90>/Filter Differentiator TF'
-  real32_T FilterDifferentiatorTF_tmp_c;// '<S38>/Filter Differentiator TF'
-  int8_T Integrator_PrevResetState;    // '<S97>/Integrator'
-  int8_T Integrator_PrevResetState_k;  // '<S45>/Integrator'
+  real32_T Integrator_DSTATE;          // '<S98>/Integrator'
+  real32_T FilterDifferentiatorTF_states_k;// '<S39>/Filter Differentiator TF'
+  real32_T Integrator_DSTATE_o;        // '<S46>/Integrator'
+  real32_T FilterDifferentiatorTF_tmp; // '<S91>/Filter Differentiator TF'
+  real32_T FilterDifferentiatorTF_tmp_c;// '<S39>/Filter Differentiator TF'
+  int8_T Integrator_PrevResetState;    // '<S98>/Integrator'
+  int8_T Integrator_PrevResetState_k;  // '<S46>/Integrator'
+  DW_MovingRMS_control_foc_T MovingRMS1;// '<S3>/Moving RMS'
+  DW_MovingRMS_control_foc_T MovingRMS;// '<S3>/Moving RMS'
 };
 
 #endif                                 //control_foc_MDLREF_HIDE_CHILD_
@@ -64,8 +69,8 @@ struct DW_control_foc_f_T {
 #ifndef control_foc_MDLREF_HIDE_CHILD_
 
 struct ZCV_control_foc_g_T {
-  real_T FilterDifferentiatorTF_Reset_ZC;// '<S90>/Filter Differentiator TF'
-  real_T FilterDifferentiatorTF_Reset__c;// '<S38>/Filter Differentiator TF'
+  real_T FilterDifferentiatorTF_Reset_ZC;// '<S91>/Filter Differentiator TF'
+  real_T FilterDifferentiatorTF_Reset__c;// '<S39>/Filter Differentiator TF'
 };
 
 #endif                                 //control_foc_MDLREF_HIDE_CHILD_
@@ -74,8 +79,8 @@ struct ZCV_control_foc_g_T {
 #ifndef control_foc_MDLREF_HIDE_CHILD_
 
 struct ZCE_control_foc_T {
-  ZCSigState FilterDifferentiatorTF_Reset_ZC;// '<S90>/Filter Differentiator TF' 
-  ZCSigState FilterDifferentiatorTF_Reset__o;// '<S38>/Filter Differentiator TF' 
+  ZCSigState FilterDifferentiatorTF_Reset_ZC;// '<S91>/Filter Differentiator TF' 
+  ZCSigState FilterDifferentiatorTF_Reset__o;// '<S39>/Filter Differentiator TF' 
 };
 
 #endif                                 //control_foc_MDLREF_HIDE_CHILD_
@@ -110,6 +115,7 @@ struct MdlrefDW_control_foc_T {
 extern void control_foc_Init(void);
 extern void control_foc(const SensorsData *rtu_Sensors, const FOCSlowInputs
   *rtu_FOCSlowInputs, ControlOutputs *rty_FOCOutputs);
+extern void control_foc_Term(void);
 
 // Model reference registration function
 extern void control_foc_initialize(const char_T **rt_errorStatus);
@@ -146,20 +152,20 @@ extern ZCE_control_foc_T control_foc_PrevZCX;
 //
 //  Block '<S2>/Data Type Duplicate' : Unused code path elimination
 //  Block '<S1>/Direct Lookup Table (n-D)1' : Unused code path elimination
-//  Block '<S53>/Data Type Duplicate' : Unused code path elimination
-//  Block '<S53>/Data Type Propagation' : Unused code path elimination
-//  Block '<S4>/Data Type Duplicate' : Unused code path elimination
+//  Block '<S54>/Data Type Duplicate' : Unused code path elimination
+//  Block '<S54>/Data Type Propagation' : Unused code path elimination
 //  Block '<S5>/Data Type Duplicate' : Unused code path elimination
-//  Block '<S5>/Data Type Duplicate1' : Unused code path elimination
-//  Block '<S7>/Data Type Duplicate' : Unused code path elimination
-//  Block '<S7>/Data Type Duplicate1' : Unused code path elimination
+//  Block '<S6>/Data Type Duplicate' : Unused code path elimination
+//  Block '<S6>/Data Type Duplicate1' : Unused code path elimination
 //  Block '<S8>/Data Type Duplicate' : Unused code path elimination
-//  Block '<S8>/Data Type Propagation' : Unused code path elimination
-//  Block '<S38>/Passthrough for tuning' : Eliminate redundant data type conversion
-//  Block '<S90>/Passthrough for tuning' : Eliminate redundant data type conversion
-//  Block '<S108>/Kt' : Eliminated nontunable gain of 1
-//  Block '<S63>/Offset' : Unused code path elimination
-//  Block '<S114>/Offset' : Unused code path elimination
+//  Block '<S8>/Data Type Duplicate1' : Unused code path elimination
+//  Block '<S9>/Data Type Duplicate' : Unused code path elimination
+//  Block '<S9>/Data Type Propagation' : Unused code path elimination
+//  Block '<S39>/Passthrough for tuning' : Eliminate redundant data type conversion
+//  Block '<S91>/Passthrough for tuning' : Eliminate redundant data type conversion
+//  Block '<S109>/Kt' : Eliminated nontunable gain of 1
+//  Block '<S64>/Offset' : Unused code path elimination
+//  Block '<S115>/Offset' : Unused code path elimination
 
 
 //-
@@ -179,118 +185,119 @@ extern ZCE_control_foc_T control_foc_PrevZCX;
 //  '<Root>' : 'control_foc'
 //  '<S1>'   : 'control_foc/FOC inner loop'
 //  '<S2>'   : 'control_foc/FOC inner loop/Clarke Transform'
-//  '<S3>'   : 'control_foc/FOC inner loop/Id PID control'
-//  '<S4>'   : 'control_foc/FOC inner loop/Inverse Clarke Transform'
-//  '<S5>'   : 'control_foc/FOC inner loop/Inverse Park Transform'
-//  '<S6>'   : 'control_foc/FOC inner loop/Iq PID control'
-//  '<S7>'   : 'control_foc/FOC inner loop/Park Transform'
-//  '<S8>'   : 'control_foc/FOC inner loop/Saturation Dynamic'
-//  '<S9>'   : 'control_foc/FOC inner loop/Id PID control/Anti-windup'
-//  '<S10>'  : 'control_foc/FOC inner loop/Id PID control/D Gain'
-//  '<S11>'  : 'control_foc/FOC inner loop/Id PID control/Filter'
-//  '<S12>'  : 'control_foc/FOC inner loop/Id PID control/Filter ICs'
-//  '<S13>'  : 'control_foc/FOC inner loop/Id PID control/I Gain'
-//  '<S14>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain'
-//  '<S15>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain Fdbk'
-//  '<S16>'  : 'control_foc/FOC inner loop/Id PID control/Integrator'
-//  '<S17>'  : 'control_foc/FOC inner loop/Id PID control/Integrator ICs'
-//  '<S18>'  : 'control_foc/FOC inner loop/Id PID control/N Copy'
-//  '<S19>'  : 'control_foc/FOC inner loop/Id PID control/N Gain'
-//  '<S20>'  : 'control_foc/FOC inner loop/Id PID control/P Copy'
-//  '<S21>'  : 'control_foc/FOC inner loop/Id PID control/Parallel P Gain'
-//  '<S22>'  : 'control_foc/FOC inner loop/Id PID control/Reset Signal'
-//  '<S23>'  : 'control_foc/FOC inner loop/Id PID control/Saturation'
-//  '<S24>'  : 'control_foc/FOC inner loop/Id PID control/Saturation Fdbk'
-//  '<S25>'  : 'control_foc/FOC inner loop/Id PID control/Sum'
-//  '<S26>'  : 'control_foc/FOC inner loop/Id PID control/Sum Fdbk'
-//  '<S27>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode'
-//  '<S28>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode Sum'
-//  '<S29>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Integral'
-//  '<S30>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Ngain'
-//  '<S31>'  : 'control_foc/FOC inner loop/Id PID control/postSat Signal'
-//  '<S32>'  : 'control_foc/FOC inner loop/Id PID control/preSat Signal'
-//  '<S33>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel'
-//  '<S34>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone'
-//  '<S35>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone/External'
-//  '<S36>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone/External/Dead Zone Dynamic'
-//  '<S37>'  : 'control_foc/FOC inner loop/Id PID control/D Gain/External Parameters'
-//  '<S38>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter'
-//  '<S39>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter/Tsamp'
-//  '<S40>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter/Tsamp/Internal Ts'
-//  '<S41>'  : 'control_foc/FOC inner loop/Id PID control/Filter ICs/Internal IC - Filter'
-//  '<S42>'  : 'control_foc/FOC inner loop/Id PID control/I Gain/External Parameters'
-//  '<S43>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain/Passthrough'
-//  '<S44>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain Fdbk/Passthrough'
-//  '<S45>'  : 'control_foc/FOC inner loop/Id PID control/Integrator/Discrete'
-//  '<S46>'  : 'control_foc/FOC inner loop/Id PID control/Integrator ICs/Internal IC'
-//  '<S47>'  : 'control_foc/FOC inner loop/Id PID control/N Copy/External Parameters'
-//  '<S48>'  : 'control_foc/FOC inner loop/Id PID control/N Gain/External Parameters'
-//  '<S49>'  : 'control_foc/FOC inner loop/Id PID control/P Copy/Disabled'
-//  '<S50>'  : 'control_foc/FOC inner loop/Id PID control/Parallel P Gain/External Parameters'
-//  '<S51>'  : 'control_foc/FOC inner loop/Id PID control/Reset Signal/External Reset'
-//  '<S52>'  : 'control_foc/FOC inner loop/Id PID control/Saturation/External'
-//  '<S53>'  : 'control_foc/FOC inner loop/Id PID control/Saturation/External/Saturation Dynamic'
-//  '<S54>'  : 'control_foc/FOC inner loop/Id PID control/Saturation Fdbk/Passthrough'
-//  '<S55>'  : 'control_foc/FOC inner loop/Id PID control/Sum/Sum_PID'
-//  '<S56>'  : 'control_foc/FOC inner loop/Id PID control/Sum Fdbk/Enabled'
-//  '<S57>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode/Disabled'
-//  '<S58>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode Sum/Passthrough'
-//  '<S59>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Integral/TsSignalSpecification'
-//  '<S60>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Ngain/Passthrough'
-//  '<S61>'  : 'control_foc/FOC inner loop/Id PID control/postSat Signal/Feedback_Path'
-//  '<S62>'  : 'control_foc/FOC inner loop/Id PID control/preSat Signal/Feedback_Path'
-//  '<S63>'  : 'control_foc/FOC inner loop/Inverse Park Transform/Switch_Axis'
-//  '<S64>'  : 'control_foc/FOC inner loop/Iq PID control/Anti-windup'
-//  '<S65>'  : 'control_foc/FOC inner loop/Iq PID control/D Gain'
-//  '<S66>'  : 'control_foc/FOC inner loop/Iq PID control/Filter'
-//  '<S67>'  : 'control_foc/FOC inner loop/Iq PID control/Filter ICs'
-//  '<S68>'  : 'control_foc/FOC inner loop/Iq PID control/I Gain'
-//  '<S69>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain'
-//  '<S70>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain Fdbk'
-//  '<S71>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator'
-//  '<S72>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator ICs'
-//  '<S73>'  : 'control_foc/FOC inner loop/Iq PID control/N Copy'
-//  '<S74>'  : 'control_foc/FOC inner loop/Iq PID control/N Gain'
-//  '<S75>'  : 'control_foc/FOC inner loop/Iq PID control/P Copy'
-//  '<S76>'  : 'control_foc/FOC inner loop/Iq PID control/Parallel P Gain'
-//  '<S77>'  : 'control_foc/FOC inner loop/Iq PID control/Reset Signal'
-//  '<S78>'  : 'control_foc/FOC inner loop/Iq PID control/Saturation'
-//  '<S79>'  : 'control_foc/FOC inner loop/Iq PID control/Saturation Fdbk'
-//  '<S80>'  : 'control_foc/FOC inner loop/Iq PID control/Sum'
-//  '<S81>'  : 'control_foc/FOC inner loop/Iq PID control/Sum Fdbk'
-//  '<S82>'  : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode'
-//  '<S83>'  : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode Sum'
-//  '<S84>'  : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Integral'
-//  '<S85>'  : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Ngain'
-//  '<S86>'  : 'control_foc/FOC inner loop/Iq PID control/postSat Signal'
-//  '<S87>'  : 'control_foc/FOC inner loop/Iq PID control/preSat Signal'
-//  '<S88>'  : 'control_foc/FOC inner loop/Iq PID control/Anti-windup/Passthrough'
-//  '<S89>'  : 'control_foc/FOC inner loop/Iq PID control/D Gain/External Parameters'
-//  '<S90>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter'
-//  '<S91>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter/Tsamp'
-//  '<S92>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter/Tsamp/Internal Ts'
-//  '<S93>'  : 'control_foc/FOC inner loop/Iq PID control/Filter ICs/Internal IC - Filter'
-//  '<S94>'  : 'control_foc/FOC inner loop/Iq PID control/I Gain/External Parameters'
-//  '<S95>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain/Passthrough'
-//  '<S96>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain Fdbk/Passthrough'
-//  '<S97>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator/Discrete'
-//  '<S98>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator ICs/Internal IC'
-//  '<S99>'  : 'control_foc/FOC inner loop/Iq PID control/N Copy/External Parameters'
-//  '<S100>' : 'control_foc/FOC inner loop/Iq PID control/N Gain/External Parameters'
-//  '<S101>' : 'control_foc/FOC inner loop/Iq PID control/P Copy/Disabled'
-//  '<S102>' : 'control_foc/FOC inner loop/Iq PID control/Parallel P Gain/External Parameters'
-//  '<S103>' : 'control_foc/FOC inner loop/Iq PID control/Reset Signal/External Reset'
-//  '<S104>' : 'control_foc/FOC inner loop/Iq PID control/Saturation/Passthrough'
-//  '<S105>' : 'control_foc/FOC inner loop/Iq PID control/Saturation Fdbk/Passthrough'
-//  '<S106>' : 'control_foc/FOC inner loop/Iq PID control/Sum/Sum_PID'
-//  '<S107>' : 'control_foc/FOC inner loop/Iq PID control/Sum Fdbk/Enabled'
-//  '<S108>' : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode/Enabled'
-//  '<S109>' : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode Sum/Tracking Mode'
-//  '<S110>' : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Integral/TsSignalSpecification'
-//  '<S111>' : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Ngain/Passthrough'
-//  '<S112>' : 'control_foc/FOC inner loop/Iq PID control/postSat Signal/Feedback_Path'
-//  '<S113>' : 'control_foc/FOC inner loop/Iq PID control/preSat Signal/Feedback_Path'
-//  '<S114>' : 'control_foc/FOC inner loop/Park Transform/Switch_Axis'
+//  '<S3>'   : 'control_foc/FOC inner loop/Compute dissipated power'
+//  '<S4>'   : 'control_foc/FOC inner loop/Id PID control'
+//  '<S5>'   : 'control_foc/FOC inner loop/Inverse Clarke Transform'
+//  '<S6>'   : 'control_foc/FOC inner loop/Inverse Park Transform'
+//  '<S7>'   : 'control_foc/FOC inner loop/Iq PID control'
+//  '<S8>'   : 'control_foc/FOC inner loop/Park Transform'
+//  '<S9>'   : 'control_foc/FOC inner loop/Saturation Dynamic'
+//  '<S10>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup'
+//  '<S11>'  : 'control_foc/FOC inner loop/Id PID control/D Gain'
+//  '<S12>'  : 'control_foc/FOC inner loop/Id PID control/Filter'
+//  '<S13>'  : 'control_foc/FOC inner loop/Id PID control/Filter ICs'
+//  '<S14>'  : 'control_foc/FOC inner loop/Id PID control/I Gain'
+//  '<S15>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain'
+//  '<S16>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain Fdbk'
+//  '<S17>'  : 'control_foc/FOC inner loop/Id PID control/Integrator'
+//  '<S18>'  : 'control_foc/FOC inner loop/Id PID control/Integrator ICs'
+//  '<S19>'  : 'control_foc/FOC inner loop/Id PID control/N Copy'
+//  '<S20>'  : 'control_foc/FOC inner loop/Id PID control/N Gain'
+//  '<S21>'  : 'control_foc/FOC inner loop/Id PID control/P Copy'
+//  '<S22>'  : 'control_foc/FOC inner loop/Id PID control/Parallel P Gain'
+//  '<S23>'  : 'control_foc/FOC inner loop/Id PID control/Reset Signal'
+//  '<S24>'  : 'control_foc/FOC inner loop/Id PID control/Saturation'
+//  '<S25>'  : 'control_foc/FOC inner loop/Id PID control/Saturation Fdbk'
+//  '<S26>'  : 'control_foc/FOC inner loop/Id PID control/Sum'
+//  '<S27>'  : 'control_foc/FOC inner loop/Id PID control/Sum Fdbk'
+//  '<S28>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode'
+//  '<S29>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode Sum'
+//  '<S30>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Integral'
+//  '<S31>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Ngain'
+//  '<S32>'  : 'control_foc/FOC inner loop/Id PID control/postSat Signal'
+//  '<S33>'  : 'control_foc/FOC inner loop/Id PID control/preSat Signal'
+//  '<S34>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel'
+//  '<S35>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone'
+//  '<S36>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone/External'
+//  '<S37>'  : 'control_foc/FOC inner loop/Id PID control/Anti-windup/Disc. Clamping Parallel/Dead Zone/External/Dead Zone Dynamic'
+//  '<S38>'  : 'control_foc/FOC inner loop/Id PID control/D Gain/External Parameters'
+//  '<S39>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter'
+//  '<S40>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter/Tsamp'
+//  '<S41>'  : 'control_foc/FOC inner loop/Id PID control/Filter/Disc. Trapezoidal Filter/Tsamp/Internal Ts'
+//  '<S42>'  : 'control_foc/FOC inner loop/Id PID control/Filter ICs/Internal IC - Filter'
+//  '<S43>'  : 'control_foc/FOC inner loop/Id PID control/I Gain/External Parameters'
+//  '<S44>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain/Passthrough'
+//  '<S45>'  : 'control_foc/FOC inner loop/Id PID control/Ideal P Gain Fdbk/Passthrough'
+//  '<S46>'  : 'control_foc/FOC inner loop/Id PID control/Integrator/Discrete'
+//  '<S47>'  : 'control_foc/FOC inner loop/Id PID control/Integrator ICs/Internal IC'
+//  '<S48>'  : 'control_foc/FOC inner loop/Id PID control/N Copy/External Parameters'
+//  '<S49>'  : 'control_foc/FOC inner loop/Id PID control/N Gain/External Parameters'
+//  '<S50>'  : 'control_foc/FOC inner loop/Id PID control/P Copy/Disabled'
+//  '<S51>'  : 'control_foc/FOC inner loop/Id PID control/Parallel P Gain/External Parameters'
+//  '<S52>'  : 'control_foc/FOC inner loop/Id PID control/Reset Signal/External Reset'
+//  '<S53>'  : 'control_foc/FOC inner loop/Id PID control/Saturation/External'
+//  '<S54>'  : 'control_foc/FOC inner loop/Id PID control/Saturation/External/Saturation Dynamic'
+//  '<S55>'  : 'control_foc/FOC inner loop/Id PID control/Saturation Fdbk/Passthrough'
+//  '<S56>'  : 'control_foc/FOC inner loop/Id PID control/Sum/Sum_PID'
+//  '<S57>'  : 'control_foc/FOC inner loop/Id PID control/Sum Fdbk/Enabled'
+//  '<S58>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode/Disabled'
+//  '<S59>'  : 'control_foc/FOC inner loop/Id PID control/Tracking Mode Sum/Passthrough'
+//  '<S60>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Integral/TsSignalSpecification'
+//  '<S61>'  : 'control_foc/FOC inner loop/Id PID control/Tsamp - Ngain/Passthrough'
+//  '<S62>'  : 'control_foc/FOC inner loop/Id PID control/postSat Signal/Feedback_Path'
+//  '<S63>'  : 'control_foc/FOC inner loop/Id PID control/preSat Signal/Feedback_Path'
+//  '<S64>'  : 'control_foc/FOC inner loop/Inverse Park Transform/Switch_Axis'
+//  '<S65>'  : 'control_foc/FOC inner loop/Iq PID control/Anti-windup'
+//  '<S66>'  : 'control_foc/FOC inner loop/Iq PID control/D Gain'
+//  '<S67>'  : 'control_foc/FOC inner loop/Iq PID control/Filter'
+//  '<S68>'  : 'control_foc/FOC inner loop/Iq PID control/Filter ICs'
+//  '<S69>'  : 'control_foc/FOC inner loop/Iq PID control/I Gain'
+//  '<S70>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain'
+//  '<S71>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain Fdbk'
+//  '<S72>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator'
+//  '<S73>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator ICs'
+//  '<S74>'  : 'control_foc/FOC inner loop/Iq PID control/N Copy'
+//  '<S75>'  : 'control_foc/FOC inner loop/Iq PID control/N Gain'
+//  '<S76>'  : 'control_foc/FOC inner loop/Iq PID control/P Copy'
+//  '<S77>'  : 'control_foc/FOC inner loop/Iq PID control/Parallel P Gain'
+//  '<S78>'  : 'control_foc/FOC inner loop/Iq PID control/Reset Signal'
+//  '<S79>'  : 'control_foc/FOC inner loop/Iq PID control/Saturation'
+//  '<S80>'  : 'control_foc/FOC inner loop/Iq PID control/Saturation Fdbk'
+//  '<S81>'  : 'control_foc/FOC inner loop/Iq PID control/Sum'
+//  '<S82>'  : 'control_foc/FOC inner loop/Iq PID control/Sum Fdbk'
+//  '<S83>'  : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode'
+//  '<S84>'  : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode Sum'
+//  '<S85>'  : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Integral'
+//  '<S86>'  : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Ngain'
+//  '<S87>'  : 'control_foc/FOC inner loop/Iq PID control/postSat Signal'
+//  '<S88>'  : 'control_foc/FOC inner loop/Iq PID control/preSat Signal'
+//  '<S89>'  : 'control_foc/FOC inner loop/Iq PID control/Anti-windup/Passthrough'
+//  '<S90>'  : 'control_foc/FOC inner loop/Iq PID control/D Gain/External Parameters'
+//  '<S91>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter'
+//  '<S92>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter/Tsamp'
+//  '<S93>'  : 'control_foc/FOC inner loop/Iq PID control/Filter/Disc. Trapezoidal Filter/Tsamp/Internal Ts'
+//  '<S94>'  : 'control_foc/FOC inner loop/Iq PID control/Filter ICs/Internal IC - Filter'
+//  '<S95>'  : 'control_foc/FOC inner loop/Iq PID control/I Gain/External Parameters'
+//  '<S96>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain/Passthrough'
+//  '<S97>'  : 'control_foc/FOC inner loop/Iq PID control/Ideal P Gain Fdbk/Passthrough'
+//  '<S98>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator/Discrete'
+//  '<S99>'  : 'control_foc/FOC inner loop/Iq PID control/Integrator ICs/Internal IC'
+//  '<S100>' : 'control_foc/FOC inner loop/Iq PID control/N Copy/External Parameters'
+//  '<S101>' : 'control_foc/FOC inner loop/Iq PID control/N Gain/External Parameters'
+//  '<S102>' : 'control_foc/FOC inner loop/Iq PID control/P Copy/Disabled'
+//  '<S103>' : 'control_foc/FOC inner loop/Iq PID control/Parallel P Gain/External Parameters'
+//  '<S104>' : 'control_foc/FOC inner loop/Iq PID control/Reset Signal/External Reset'
+//  '<S105>' : 'control_foc/FOC inner loop/Iq PID control/Saturation/Passthrough'
+//  '<S106>' : 'control_foc/FOC inner loop/Iq PID control/Saturation Fdbk/Passthrough'
+//  '<S107>' : 'control_foc/FOC inner loop/Iq PID control/Sum/Sum_PID'
+//  '<S108>' : 'control_foc/FOC inner loop/Iq PID control/Sum Fdbk/Enabled'
+//  '<S109>' : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode/Enabled'
+//  '<S110>' : 'control_foc/FOC inner loop/Iq PID control/Tracking Mode Sum/Tracking Mode'
+//  '<S111>' : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Integral/TsSignalSpecification'
+//  '<S112>' : 'control_foc/FOC inner loop/Iq PID control/Tsamp - Ngain/Passthrough'
+//  '<S113>' : 'control_foc/FOC inner loop/Iq PID control/postSat Signal/Feedback_Path'
+//  '<S114>' : 'control_foc/FOC inner loop/Iq PID control/preSat Signal/Feedback_Path'
+//  '<S115>' : 'control_foc/FOC inner loop/Park Transform/Switch_Axis'
 
 #endif                                 // RTW_HEADER_control_foc_h_
 

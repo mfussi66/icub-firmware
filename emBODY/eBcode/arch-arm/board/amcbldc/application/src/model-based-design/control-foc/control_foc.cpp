@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_foc'.
 //
-// Model version                  : 5.8
+// Model version                  : 5.12
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:23 2023
+// C/C++ source code generated on : Tue May  9 10:44:57 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -63,6 +63,15 @@ void control_foc(const SensorsData *rtu_Sensors, const FOCSlowInputs
   FOCInnerLoop_Update(&rtu_FOCSlowInputs->controlouteroutputs);
 
   // End of Update for SubSystem: '<Root>/FOC inner loop'
+}
+
+// Termination for referenced model: 'control_foc'
+void control_foc_Term(void)
+{
+  // Terminate for Atomic SubSystem: '<Root>/FOC inner loop'
+  FOCInnerLoop_Term();
+
+  // End of Terminate for SubSystem: '<Root>/FOC inner loop'
 }
 
 // Model initialize function

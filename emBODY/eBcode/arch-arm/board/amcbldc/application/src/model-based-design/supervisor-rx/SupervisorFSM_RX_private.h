@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_RX'.
 //
-// Model version                  : 6.3
+// Model version                  : 6.7
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:33:59 2023
+// C/C++ source code generated on : Tue May  9 10:44:20 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -20,7 +20,6 @@
 #define RTW_HEADER_SupervisorFSM_RX_private_h_
 #include "rtwtypes.h"
 #include "SupervisorFSM_RX_types.h"
-#include "SupervisorFSM_RX.h"
 
 // Macros for accessing real-time model data structure
 #ifndef rtmGetErrorStatus
@@ -38,10 +37,6 @@
 #ifndef rtmSetErrorStatusPointer
 #define rtmSetErrorStatusPointer(rtm, val) ((rtm)->errorStatus = (val))
 #endif
-
-// Invariant block signals (default storage)
-extern const ConstB_SupervisorFSM_RX_h_T SupervisorFSM_RX_ConstB;
-
 #endif                                // RTW_HEADER_SupervisorFSM_RX_private_h_
 
 //

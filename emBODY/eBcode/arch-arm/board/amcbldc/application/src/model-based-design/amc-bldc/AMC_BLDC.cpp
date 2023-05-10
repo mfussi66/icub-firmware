@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 6.15
+// Model version                  : 6.16
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:59 2023
+// C/C++ source code generated on : Tue May  9 10:45:44 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -60,8 +60,8 @@ ConfigurationParameters InitConfParams = {
     24.0F,
     25.9F,
     271.0F,
-    56.0F,
-    270.0F
+    10.2F,
+    384.0F
   },
 
   {
@@ -188,11 +188,11 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
 
   // RateTransition generated from: '<Root>/Adapter2'
   rtw_mutex_lock();
-  AMC_BLDC_DW.RTBInsertedForAdapter_Inser_m3f =
+  AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3 =
     AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mp;
   rtw_mutex_unlock();
   AMC_BLDC_B.BusConversion_InsertedFor_FOC_a.configurationparameters =
-    AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF[AMC_BLDC_DW.RTBInsertedForAdapter_Inser_m3f];
+    AMC_BLDC_DW.RTBInsertedForAdapter_InsertedF[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3];
 
   // RateTransition generated from: '<Root>/Adapter2'
   rtw_mutex_lock();
@@ -208,7 +208,7 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
     AMC_BLDC_DW.RTBInsertedForAdapter_Insert_jj;
   rtw_mutex_unlock();
   AMC_BLDC_B.BusConversion_InsertedFor_FOC_a.targets =
-    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mb];
+    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mv[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mb];
 
   // RateTransition generated from: '<Root>/Adapter2'
   rtw_mutex_lock();
@@ -475,7 +475,7 @@ void AMC_BLDC_step_Time_1ms(void)      // Sample time: [0.001s, 0.0s]
     wrBufIdx = 0;
   }
 
-  if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Inser_m3f) {
+  if (wrBufIdx == AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3) {
     wrBufIdx = static_cast<int8_T>(wrBufIdx + 1);
     if (wrBufIdx == 3) {
       wrBufIdx = 0;
@@ -502,7 +502,7 @@ void AMC_BLDC_step_Time_1ms(void)      // Sample time: [0.001s, 0.0s]
   }
 
   rtw_mutex_unlock();
-  AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m[wrBufIdx] =
+  AMC_BLDC_DW.RTBInsertedForAdapter_Insert_mv[wrBufIdx] =
     rtb_SupervisorFSM_RX_o2;
   AMC_BLDC_DW.RTBInsertedForAdapter_Insert_jj = wrBufIdx;
 
@@ -585,7 +585,7 @@ void AMC_BLDC_step_Time_1ms(void)      // Sample time: [0.001s, 0.0s]
     break;
 
    case 1:
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3 =
+    AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m =
       AMC_BLDC_B.RTBInsertedForAdapter_Inserte_a;
     break;
 
@@ -628,7 +628,7 @@ void AMC_BLDC_step_Time_10ms(void)     // Sample time: [0.01s, 0.0s]
 
    case 1:
     rtb_RTBInsertedForAdapter_Ins_f =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Insert_m3;
+      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_m;
     break;
 
    case 2:
@@ -749,9 +749,6 @@ void AMC_BLDC_initialize(void)
   // Start for RateTransition generated from: '<S5>/Adapter'
   rtw_mutex_init();
 
-  // SystemInitialize for ModelReference: '<S5>/Estimation_Temperature'
-  thermal_model_Init();
-
   // SystemInitialize for ModelReference: '<S5>/Estimation_Velocity'
   estimation_velocity_Init();
 
@@ -780,8 +777,7 @@ void AMC_BLDC_initialize(void)
   //   Outport generated from: '<Root>/Out Bus Element3'
   //   Outport generated from: '<Root>/Out Bus Element4'
 
-  SupervisorFSM_RX_Init(&AMC_BLDC_Y.Flags_p,
-                        &AMC_BLDC_Y.ConfigurationParameters_p);
+  SupervisorFSM_RX_Init(&AMC_BLDC_Y.ConfigurationParameters_p);
 
   // SystemInitialize for ModelReference: '<S7>/SupervisorFSM_TX' incorporates:
   //   Outport generated from: '<Root>/Out Bus Element3'
@@ -815,6 +811,12 @@ void AMC_BLDC_terminate(void)
   // Terminate for RateTransition generated from: '<Root>/Adapter2'
   rtw_mutex_destroy();
 
+  // Terminate for ModelReference: '<Root>/FOC' incorporates:
+  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Outport generated from: '<Root>/Out Bus Element'
+
+  control_foc_Term();
+
   // Terminate for RateTransition generated from: '<Root>/Adapter1'
   rtw_mutex_destroy();
 
@@ -832,9 +834,6 @@ void AMC_BLDC_terminate(void)
 
   // Terminate for RateTransition generated from: '<S5>/Adapter'
   rtw_mutex_destroy();
-
-  // Terminate for ModelReference: '<S5>/Estimation_Temperature'
-  thermal_model_Term();
 }
 
 //

@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_RX'.
 //
-// Model version                  : 6.3
+// Model version                  : 6.7
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:33:59 2023
+// C/C++ source code generated on : Tue May  9 10:44:20 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -86,15 +86,6 @@ struct DW_SupervisorFSM_RX_f_T {
 
 #endif                                 //SupervisorFSM_RX_MDLREF_HIDE_CHILD_
 
-// Invariant block signals for model 'SupervisorFSM_RX'
-#ifndef SupervisorFSM_RX_MDLREF_HIDE_CHILD_
-
-struct ConstB_SupervisorFSM_RX_h_T {
-  boolean_T Constant5;                 // '<Root>/Constant5'
-};
-
-#endif                                 //SupervisorFSM_RX_MDLREF_HIDE_CHILD_
-
 #ifndef SupervisorFSM_RX_MDLREF_HIDE_CHILD_
 
 // Real-time Model Data Structure
@@ -127,7 +118,7 @@ extern ConfigurationParameters InitConfParams;// Variable: InitConfParams
                                                  //    '<S3>/Chart'
                                                  //    '<S4>/Chart'
 
-extern void SupervisorFSM_RX_Init(Flags *rty_Flags, ConfigurationParameters
+extern void SupervisorFSM_RX_Init(ConfigurationParameters
   *rty_ConfigurationParameters);
 extern void SupervisorFSM_RX(const SensorsData *rtu_SensorsData, const
   ExternalFlags *rtu_ExternalFlags, const ControlOutputs *rtu_ControlOutputs,
@@ -194,11 +185,12 @@ extern DW_SupervisorFSM_RX_f_T SupervisorFSM_RX_DW;
 //  '<S4>'   : 'SupervisorFSM_RX/PID Handler'
 //  '<S5>'   : 'SupervisorFSM_RX/SetpointHandler'
 //  '<S6>'   : 'SupervisorFSM_RX/SupervisorRX State Handler'
-//  '<S7>'   : 'SupervisorFSM_RX/CAN Message Handler/CAN Event Dispatcher'
-//  '<S8>'   : 'SupervisorFSM_RX/Control Mode Handler Motor 0/ControlMode_SM_motor0'
-//  '<S9>'   : 'SupervisorFSM_RX/Limits Handler/Chart'
-//  '<S10>'  : 'SupervisorFSM_RX/PID Handler/Chart'
-//  '<S11>'  : 'SupervisorFSM_RX/SetpointHandler/Chart1'
+//  '<S7>'   : 'SupervisorFSM_RX/Thermal Protection'
+//  '<S8>'   : 'SupervisorFSM_RX/CAN Message Handler/CAN Event Dispatcher'
+//  '<S9>'   : 'SupervisorFSM_RX/Control Mode Handler Motor 0/ControlMode_SM_motor0'
+//  '<S10>'  : 'SupervisorFSM_RX/Limits Handler/Chart'
+//  '<S11>'  : 'SupervisorFSM_RX/PID Handler/Chart'
+//  '<S12>'  : 'SupervisorFSM_RX/SetpointHandler/Chart1'
 
 #endif                                 // RTW_HEADER_SupervisorFSM_RX_h_
 

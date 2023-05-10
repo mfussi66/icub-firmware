@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 6.15
+// Model version                  : 6.16
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:59 2023
+// C/C++ source code generated on : Tue May  9 10:45:44 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -66,13 +66,13 @@ struct DW_AMC_BLDC_T {
   SensorsData RTBInsertedForAdapter_Insert_eb;// synthesized block
   SensorsData RTBInsertedForAdapter_Insert_cy;// synthesized block
   SensorsData RTBInsertedForAdapter_Insert_ju;// synthesized block
-  Targets RTBInsertedForAdapter_Inserte_m[3];// synthesized block
   ControlOutputs RTBInsertedForAdapter_Inserte_d;// synthesized block
   ControlOutputs RTBInsertedForAdapter_Insert_j2;// synthesized block
   ControlOutputs RTBInsertedForAdapter_Inserte_o;// synthesized block
   ControlOutputs RTBInsertedForAdapter_Inserte_f;// synthesized block
-  ControlOutputs RTBInsertedForAdapter_Insert_m3;// synthesized block
+  ControlOutputs RTBInsertedForAdapter_Inserte_m;// synthesized block
   ControlOutputs RTBInsertedForAdapter_Inserte_b;// synthesized block
+  Targets RTBInsertedForAdapter_Insert_mv[3];// synthesized block
   EstimatedData RTBInsertedForAdapter_Inserte_k[3];// synthesized block
   ControlOuterOutputs RTBInsertedForAdapter_Inserte_i[3];// synthesized block
   Flags RTBInsertedForAdapter_Inserte_l[3];// synthesized block
@@ -90,7 +90,7 @@ struct DW_AMC_BLDC_T {
   int8_T RTBInsertedForAdapter_Insert_hj;// synthesized block
   int8_T RTBInsertedForAdapter_Inserte_p;// synthesized block
   int8_T RTBInsertedForAdapter_Insert_mp;// synthesized block
-  int8_T RTBInsertedForAdapter_Inser_m3f;// synthesized block
+  int8_T RTBInsertedForAdapter_Insert_m3;// synthesized block
   int8_T RTBInsertedForAdapter_Insert_b2;// synthesized block
   int8_T RTBInsertedForAdapter_Insert_ko;// synthesized block
   int8_T RTBInsertedForAdapter_Insert_jj;// synthesized block

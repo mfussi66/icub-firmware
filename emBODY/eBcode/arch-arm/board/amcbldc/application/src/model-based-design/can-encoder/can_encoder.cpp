@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'can_encoder'.
 //
-// Model version                  : 5.6
+// Model version                  : 5.7
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:15 2023
+// C/C++ source code generated on : Tue May  9 10:44:45 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -62,7 +62,7 @@ void can_encoder(const BUS_MESSAGES_TX *rtu_messages_tx, const BUS_STATUS_TX
   // DataTypeConversion: '<S4>/Data Type Conversion1' incorporates:
   //   Gain: '<S4>/Gain1'
 
-  tmp_0 = 1000.0F * rtu_messages_tx->status.temperature;
+  tmp_0 = 10.0F * rtu_messages_tx->status.temperature;
   if (tmp_0 < 32768.0F) {
     if (tmp_0 >= -32768.0F) {
       rtb_DataTypeConversion1_0 = static_cast<int16_T>(tmp_0);

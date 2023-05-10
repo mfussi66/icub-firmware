@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'thermal_model'.
 //
-// Model version                  : 5.17
+// Model version                  : 5.21
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:34:51 2023
+// C/C++ source code generated on : Tue May  9 10:45:31 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -46,6 +46,7 @@ struct ControlOutputs
 
   // direct current
   MotorCurrent Id_fbk;
+  real32_T Power;
 };
 
 #endif
@@ -201,51 +202,6 @@ struct MotorTemperature
 };
 
 #endif
-
-#ifndef struct_g_dsp_internal_ExponentialMov_T
-#define struct_g_dsp_internal_ExponentialMov_T
-
-struct g_dsp_internal_ExponentialMov_T
-{
-  int32_T isInitialized;
-  boolean_T isSetupComplete;
-  boolean_T TunablePropsChanged;
-  real32_T ForgettingFactor;
-  real32_T pwN;
-  real32_T pmN;
-  real32_T plambda;
-};
-
-#endif                                // struct_g_dsp_internal_ExponentialMov_T
-
-#ifndef struct_cell_wrap_thermal_model_T
-#define struct_cell_wrap_thermal_model_T
-
-struct cell_wrap_thermal_model_T
-{
-  uint32_T f1[8];
-};
-
-#endif                                 // struct_cell_wrap_thermal_model_T
-
-#ifndef struct_dsp_simulink_MovingRMS_therma_T
-#define struct_dsp_simulink_MovingRMS_therma_T
-
-struct dsp_simulink_MovingRMS_therma_T
-{
-  boolean_T matlabCodegenIsDeleted;
-  int32_T isInitialized;
-  boolean_T isSetupComplete;
-  boolean_T TunablePropsChanged;
-  cell_wrap_thermal_model_T inputVarSize;
-  real32_T ForgettingFactor;
-  g_dsp_internal_ExponentialMov_T *pStatistic;
-  int32_T NumChannels;
-  int32_T FrameLength;
-  g_dsp_internal_ExponentialMov_T _pobj0;
-};
-
-#endif                                // struct_dsp_simulink_MovingRMS_therma_T
 
 // Forward declaration for rtModel
 typedef struct tag_RTM_thermal_model_T RT_MODEL_thermal_model_T;

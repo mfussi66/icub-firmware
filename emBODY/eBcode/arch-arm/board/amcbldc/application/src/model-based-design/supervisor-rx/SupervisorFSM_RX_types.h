@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'SupervisorFSM_RX'.
 //
-// Model version                  : 6.3
+// Model version                  : 6.7
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Fri May  5 17:33:59 2023
+// C/C++ source code generated on : Tue May  9 10:44:20 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -97,6 +97,7 @@ struct ControlOutputs
 
   // direct current
   MotorCurrent Id_fbk;
+  real32_T Power;
 };
 
 #endif
