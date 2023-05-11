@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'thermal_model'.
 //
-// Model version                  : 5.21
+// Model version                  : 5.23
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Tue May  9 10:45:31 2023
+// C/C++ source code generated on : Thu May 11 10:44:06 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

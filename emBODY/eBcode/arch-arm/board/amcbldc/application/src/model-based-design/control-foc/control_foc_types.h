@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_foc'.
 //
-// Model version                  : 5.12
+// Model version                  : 5.13
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Tue May  9 10:44:57 2023
+// C/C++ source code generated on : Thu May 11 10:43:35 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -391,7 +391,6 @@ struct dsp_simulink_MovingRMS_contro_T
   boolean_T isSetupComplete;
   boolean_T TunablePropsChanged;
   cell_wrap_control_foc_T inputVarSize;
-  real32_T ForgettingFactor;
   g_dsp_internal_ExponentialMov_T *pStatistic;
   int32_T NumChannels;
   int32_T FrameLength;

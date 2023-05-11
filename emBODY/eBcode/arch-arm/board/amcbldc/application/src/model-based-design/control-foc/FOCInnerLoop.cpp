@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'control_foc'.
 //
-// Model version                  : 5.12
+// Model version                  : 5.13
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Tue May  9 10:44:57 2023
+// C/C++ source code generated on : Thu May 11 10:43:35 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -38,18 +38,11 @@ extern "C"
 static void control_foc_SystemCore_setup(dsp_simulink_MovingRMS_contro_T *obj);
 static void control_foc_SystemCore_setup(dsp_simulink_MovingRMS_contro_T *obj)
 {
-  real32_T val;
   boolean_T flag;
   obj->isSetupComplete = false;
   obj->isInitialized = 1;
   obj->NumChannels = 1;
   obj->FrameLength = 1;
-  if (obj->ForgettingFactor != 0.0F) {
-    val = obj->ForgettingFactor;
-  } else {
-    val = 2.22044605E-16F;
-  }
-
   obj->_pobj0.isInitialized = 0;
   obj->_pobj0.isInitialized = 0;
   flag = (obj->_pobj0.isInitialized == 1);
@@ -57,7 +50,7 @@ static void control_foc_SystemCore_setup(dsp_simulink_MovingRMS_contro_T *obj)
     obj->_pobj0.TunablePropsChanged = true;
   }
 
-  obj->_pobj0.ForgettingFactor = val;
+  obj->_pobj0.ForgettingFactor = 1.0F;
   obj->pStatistic = &obj->_pobj0;
   obj->isSetupComplete = true;
   obj->TunablePropsChanged = false;
@@ -67,7 +60,6 @@ static void control_foc_SystemCore_setup(dsp_simulink_MovingRMS_contro_T *obj)
 void control_foc_MovingRMS_Init(DW_MovingRMS_control_foc_T *localDW)
 {
   g_dsp_internal_ExponentialMov_T *obj;
-  boolean_T flag;
 
   // Start for MATLABSystem: '<S3>/Moving RMS'
   localDW->obj.isInitialized = 0;
@@ -75,15 +67,7 @@ void control_foc_MovingRMS_Init(DW_MovingRMS_control_foc_T *localDW)
   localDW->obj.FrameLength = -1;
   localDW->obj.matlabCodegenIsDeleted = false;
   localDW->objisempty = true;
-  flag = (localDW->obj.isInitialized == 1);
-  if (flag) {
-    localDW->obj.TunablePropsChanged = true;
-  }
-
-  localDW->obj.ForgettingFactor = 0.995F;
   control_foc_SystemCore_setup(&localDW->obj);
-
-  // End of Start for MATLABSystem: '<S3>/Moving RMS'
 
   // InitializeConditions for MATLABSystem: '<S3>/Moving RMS'
   obj = localDW->obj.pStatistic;
@@ -104,27 +88,10 @@ void control_foc_MovingRMS(real32_T rtu_0, B_MovingRMS_control_foc_T *localB,
   real32_T lambda;
   real32_T pmLocal;
   real32_T pwLocal;
-  boolean_T flag;
 
   // MATLABSystem: '<S3>/Moving RMS'
-  if (localDW->obj.ForgettingFactor != 0.995F) {
-    flag = (localDW->obj.isInitialized == 1);
-    if (flag) {
-      localDW->obj.TunablePropsChanged = true;
-    }
-
-    localDW->obj.ForgettingFactor = 0.995F;
-  }
-
   if (localDW->obj.TunablePropsChanged) {
     localDW->obj.TunablePropsChanged = false;
-    obj = localDW->obj.pStatistic;
-    flag = (obj->isInitialized == 1);
-    if (flag) {
-      obj->TunablePropsChanged = true;
-    }
-
-    localDW->obj.pStatistic->ForgettingFactor = localDW->obj.ForgettingFactor;
   }
 
   a = std::abs(rtu_0);

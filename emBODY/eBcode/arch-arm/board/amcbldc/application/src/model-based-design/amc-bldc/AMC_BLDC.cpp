@@ -9,7 +9,7 @@
 //
 // Model version                  : 6.16
 // Simulink Coder version         : 9.9 (R2023a) 19-Nov-2022
-// C/C++ source code generated on : Tue May  9 10:45:44 2023
+// C/C++ source code generated on : Thu May 11 10:44:18 2023
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -219,7 +219,7 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
     AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_i[AMC_BLDC_DW.RTBInsertedForAdapter_Insert_bw];
 
   // ModelReference: '<Root>/FOC' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element6'
   //   Outport generated from: '<Root>/Out Bus Element'
 
   control_foc(&AMC_BLDC_U.SensorsData_p,
@@ -262,7 +262,7 @@ void AMC_BLDC_step_FOC(void)       // Sample time: [3.65714285714286E-5s, 0.0s]
   // End of RateTransition generated from: '<Root>/Adapter1'
 
   // RateTransition generated from: '<Root>/Adapter3' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element6'
 
   rtw_mutex_lock();
   wrBufIdx = static_cast<int8_T>(AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_g + 1);
@@ -611,7 +611,6 @@ void AMC_BLDC_step_Time_10ms(void)     // Sample time: [0.01s, 0.0s]
 {
   // local block i/o variables
   MotorTemperature rtb_Estimation_Temperature;
-  ConfigurationParameters rtb_RTBInsertedForAdapter_Inser;
   ControlOutputs rtb_RTBInsertedForAdapter_Ins_f;
   int8_T wrBufIdx;
 
@@ -639,33 +638,8 @@ void AMC_BLDC_step_Time_10ms(void)     // Sample time: [0.01s, 0.0s]
 
   // End of RateTransition generated from: '<S5>/Adapter'
 
-  // RateTransition generated from: '<S5>/Adapter3'
-  rtw_mutex_lock();
-  AMC_BLDC_DW.RTBInsertedForAdapter_Inser_pai =
-    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_gk;
-  rtw_mutex_unlock();
-  switch (AMC_BLDC_DW.RTBInsertedForAdapter_Inser_pai) {
-   case 0:
-    rtb_RTBInsertedForAdapter_Inser =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_e;
-    break;
-
-   case 1:
-    rtb_RTBInsertedForAdapter_Inser =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_c;
-    break;
-
-   case 2:
-    rtb_RTBInsertedForAdapter_Inser =
-      AMC_BLDC_DW.RTBInsertedForAdapter_Inserte_j;
-    break;
-  }
-
-  // End of RateTransition generated from: '<S5>/Adapter3'
-
   // ModelReference: '<S5>/Estimation_Temperature'
-  thermal_model(&rtb_RTBInsertedForAdapter_Ins_f,
-                &rtb_RTBInsertedForAdapter_Inser, &rtb_Estimation_Temperature);
+  thermal_model(&rtb_RTBInsertedForAdapter_Ins_f, &rtb_Estimation_Temperature);
 
   // RateTransition generated from: '<S5>/Adapter1'
   rtw_mutex_lock();
@@ -687,6 +661,12 @@ void AMC_BLDC_step_Time_10ms(void)     // Sample time: [0.01s, 0.0s]
   AMC_BLDC_DW.RTBInsertedForAdapter_Inser_jsc = wrBufIdx;
 
   // End of RateTransition generated from: '<S5>/Adapter1'
+
+  // RateTransition generated from: '<S5>/Adapter3'
+  rtw_mutex_lock();
+  AMC_BLDC_DW.RTBInsertedForAdapter_Inser_pai =
+    AMC_BLDC_DW.RTBInsertedForAdapter_Insert_gk;
+  rtw_mutex_unlock();
 }
 
 // Model initialize function
@@ -756,7 +736,7 @@ void AMC_BLDC_initialize(void)
   filter_current_Init();
 
   // SystemInitialize for ModelReference: '<Root>/FOC' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element6'
   //   Outport generated from: '<Root>/Out Bus Element'
 
   control_foc_Init();
@@ -812,7 +792,7 @@ void AMC_BLDC_terminate(void)
   rtw_mutex_destroy();
 
   // Terminate for ModelReference: '<Root>/FOC' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element6'
   //   Outport generated from: '<Root>/Out Bus Element'
 
   control_foc_Term();
