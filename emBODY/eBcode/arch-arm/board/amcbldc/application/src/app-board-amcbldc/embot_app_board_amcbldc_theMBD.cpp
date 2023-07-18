@@ -32,6 +32,7 @@ using namespace embot::hw::bsp::amcbldc;
 #include "embot_hw_sys.h"
 #include "embot_core.h"
 #include "embot_app_theLEDmanager.h"
+#include "embot_app_application_theCANtracer.h"
 #include <array>
 
 // some protocol includes
@@ -477,7 +478,17 @@ bool embot::app::board::amcbldc::theMBD::Impl::tick(const std::vector<embot::pro
             outframes.push_back(fr);
         }
     } 
+
+
+        static int cnttracer = 0;
     
+        if(++cnttracer % 1000 ==0)
+        {
+        std::vector<embot::prot::can::Frame> replies;
+        embot::app::theCANtracer &tr = embot::app::theCANtracer::getInstance();
+        tr.print("203", replies);  
+            cnttracer =0;
+        }
     
     // If motor configuration parameters changed due to a SET_MOTOR_CONFIG message, then update hal as well (Only pole_pairs at the moment)
     // TODO: We should perform the following update inside the architectural model after a SET_MOTOR_CONFIG message has been received
