@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'process_sensors'.
 //
-// Model version                  : 2.1
+// Model version                  : 2.28
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Mon Oct 20 14:52:44 2025
+// C/C++ source code generated on : Wed Nov 26 16:56:32 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M

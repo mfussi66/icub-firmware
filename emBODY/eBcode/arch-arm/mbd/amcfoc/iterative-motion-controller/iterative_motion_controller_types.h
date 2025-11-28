@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'iterative_motion_controller'.
 //
-// Model version                  : 5.33
+// Model version                  : 5.34
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Mon Oct 20 14:53:33 2025
+// C/C++ source code generated on : Wed Nov 26 16:57:25 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -439,6 +439,7 @@ struct Flags
   boolean_T enable_sending_msg_status;
   HardwareFaults hw_faults;
   boolean_T enable_thermal_protection;
+  boolean_T enable_currents_bias_removal;
 
   // control mode
   ControlModes control_mode;

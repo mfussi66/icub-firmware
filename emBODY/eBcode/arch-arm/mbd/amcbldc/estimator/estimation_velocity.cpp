@@ -9,7 +9,7 @@
 //
 // Model version                  : 8.11
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Thu Oct  9 17:31:03 2025
+// C/C++ source code generated on : Thu Nov 27 12:11:26 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -95,14 +95,13 @@ static void estimation_velocity_xgeqp3(const real32_T A[32], real32_T b_A[32],
   real32_T scale;
   real32_T smax;
   real32_T t;
-  jpvt[0] = 1;
 
   // Start for MATLABSystem: '<S4>/QR Solver'
-  tau[0] = 0.0F;
-  jpvt[1] = 2;
+  for (b_j = 0; b_j < 2; b_j++) {
+    jpvt[b_j] = b_j + 1;
+    tau[b_j] = 0.0F;
+  }
 
-  // Start for MATLABSystem: '<S4>/QR Solver'
-  tau[1] = 0.0F;
   std::memcpy(&b_A[0], &A[0], sizeof(real32_T) << 5U);
   for (b_j = 0; b_j < 2; b_j++) {
     work[b_j] = 0.0F;
@@ -323,6 +322,8 @@ static void estimation_velocity_xgeqp3(const real32_T A[32], real32_T b_A[32],
       }
     }
   }
+
+  // End of Start for MATLABSystem: '<S4>/QR Solver'
 }
 
 static void estimation_velocity_xtrsm(int32_T m, const real32_T A[32], real32_T
@@ -426,10 +427,15 @@ static void estimation_velocity_Pagelsqminnorm_solveLinearSystem(const real32_T
     estimation_velocity_xtrsm(rank, A, y);
   }
 
-  work[jpvt[0] - 1] = y[0];
-  work[jpvt[1] - 1] = y[1];
-  y[0] = work[0];
-  y[1] = work[1];
+  for (i = 0; i < 2; i++) {
+    // Start for MATLABSystem: '<S4>/QR Solver'
+    work[jpvt[i] - 1] = y[i];
+  }
+
+  for (i = 0; i < 2; i++) {
+    // Start for MATLABSystem: '<S4>/QR Solver'
+    y[i] = work[i];
+  }
 }
 
 static real32_T estimation_velocity_xnrm2_p(int32_T n, const real32_T x[32],
@@ -548,8 +554,10 @@ void estimation_velocity(const EstimationVelocityModes *rtu_EstimationConfig,
 
     if (b_rank < 2) {
       b_solverToUse = 2U;
-      b_tau[0] = 0.0F;
-      b_tau[1] = 0.0F;
+      for (i = 0; i < 2; i++) {
+        b_tau[i] = 0.0F;
+      }
+
       if (b_rank != 0) {
         for (i = 1; i >= 1; i--) {
           rtb_Delay = c_A[0];

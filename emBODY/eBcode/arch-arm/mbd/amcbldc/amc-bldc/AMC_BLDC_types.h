@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 11.0
+// Model version                  : 11.1
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Tue Oct 21 09:22:23 2025
+// C/C++ source code generated on : Thu Nov 27 12:12:13 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -480,6 +480,7 @@ struct Flags
   boolean_T enable_sending_msg_status;
   HardwareFaults hw_faults;
   boolean_T enable_thermal_protection;
+  boolean_T enable_currents_bias_removal;
 
   // control mode
   ControlModes control_mode;

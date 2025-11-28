@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'supervisor'.
 //
-// Model version                  : 5.37
+// Model version                  : 5.43
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Tue Oct 21 09:21:52 2025
+// C/C++ source code generated on : Wed Nov 26 14:24:42 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -55,15 +55,15 @@ struct DW_supervisor_f_T {
   uint8_T is_HWFaults;                 // '<Root>/Supervisor'
   uint8_T is_active_FaultButton;       // '<Root>/Supervisor'
   uint8_T is_FaultButton;              // '<Root>/Supervisor'
-  uint8_T is_active_ControlModeHandler;// '<Root>/Supervisor'
-  uint8_T is_ControlModeHandler;       // '<Root>/Supervisor'
-  uint8_T is_Calibration;              // '<Root>/Supervisor'
   uint8_T is_active_InputsDispatcher;  // '<Root>/Supervisor'
   uint8_T is_InputsDispatcher;         // '<Root>/Supervisor'
   uint8_T is_active_TargetsManager;    // '<Root>/Supervisor'
   uint8_T is_TargetsManager;           // '<Root>/Supervisor'
   uint8_T is_active_ConfigurationManager;// '<Root>/Supervisor'
   uint8_T is_ConfigurationManager;     // '<Root>/Supervisor'
+  uint8_T is_active_ControlModeHandler;// '<Root>/Supervisor'
+  uint8_T is_ControlModeHandler;       // '<Root>/Supervisor'
+  uint8_T is_Calibration;              // '<Root>/Supervisor'
   uint8_T motor_id_to_configure_prev;  // '<Root>/Supervisor'
   uint8_T motor_id_to_configure_start; // '<Root>/Supervisor'
   boolean_T areLimitsSet;              // '<Root>/Supervisor'

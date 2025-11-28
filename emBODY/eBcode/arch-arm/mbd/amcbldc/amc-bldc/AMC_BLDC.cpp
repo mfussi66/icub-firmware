@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'AMC_BLDC'.
 //
-// Model version                  : 11.0
+// Model version                  : 11.1
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Tue Oct 21 09:22:23 2025
+// C/C++ source code generated on : Thu Nov 27 12:12:13 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -97,10 +97,10 @@ ActuatorConfiguration AmcbldcInitConf = {
     0.0F,
     0.0F,
     24.0F,
-    25.9F,
-    271.0F,
-    16.0F,
-    797.5F,
+    0.0F,
+    0.0F,
+    0.0F,
+    0.0F,
     30.0F,
     false,
     ReferenceEncoder_Motor
@@ -430,7 +430,7 @@ void AMC_BLDC_step_1ms(void)           // Sample time: [0.001s, 0.0s]
   // End of RateTransition generated from: '<Root>/Motion Controller Single'
 
   // ModelReference: '<Root>/Motion Controller Single' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element1'
   //   Outport generated from: '<Root>/Out Bus Element3'
   //   Outport generated from: '<Root>/Out Bus Element2'
   //   Outport generated from: '<Root>/Out Bus Element4'
@@ -552,7 +552,7 @@ void AMC_BLDC_step_1ms(void)           // Sample time: [0.001s, 0.0s]
   // End of RateTransition generated from: '<Root>/Component2'
 
   // ModelReference generated from: '<Root>/SupervisorFSM_TX' incorporates:
-  //   Inport generated from: '<Root>/In Bus Element5'
+  //   Inport generated from: '<Root>/In Bus Element1'
   //   Outport generated from: '<Root>/Out Bus Element2'
   //   Outport generated from: '<Root>/Out Bus Element4'
 
@@ -685,6 +685,9 @@ void AMC_BLDC_initialize(void)
     &AMC_BLDC_B.SensorsDataCalibration,
     &(AMC_BLDC_DW.MotionControllerSingle_InstanceData.rtdw));
 
+  // SystemInitialize for ModelReference generated from: '<Root>/Process Sensors' 
+  process_sensors_Init(&(AMC_BLDC_DW.ProcessSensors_InstanceData.rtdw));
+
   // SystemInitialize for ModelReference generated from: '<Root>/SupervisorFSM_TX' 
   SupervisorFSM_TX_Init(&AMC_BLDC_B.MessagesTx, &AMC_BLDC_B.SupervisorFSM_TX_o2);
 
@@ -701,6 +704,9 @@ void AMC_BLDC_terminate(void)
 
   // Terminate for RateTransition generated from: '<Root>/Process Sensors'
   rtw_mutex_destroy();
+
+  // Terminate for ModelReference generated from: '<Root>/Process Sensors'
+  process_sensors_Term(&(AMC_BLDC_DW.ProcessSensors_InstanceData.rtdw));
 
   // Terminate for RateTransition generated from: '<Root>/FOC'
   rtw_mutex_destroy();

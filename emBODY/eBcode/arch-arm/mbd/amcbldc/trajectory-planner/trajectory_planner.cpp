@@ -9,7 +9,7 @@
 //
 // Model version                  : 2.33
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Tue Oct 21 09:21:58 2025
+// C/C++ source code generated on : Wed Nov 26 14:24:47 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -18,8 +18,9 @@
 //
 #include "trajectory_planner.h"
 #include "trajectory_planner_types.h"
-#include <cmath>
 #include "rtwtypes.h"
+#include <cmath>
+#include "trajectory_planner_private.h"
 #include "zero_crossing_types.h"
 
 // System initialize for referenced model: 'trajectory_planner'
@@ -31,13 +32,12 @@ void trajectory_planner_Init(B_trajectory_planner_c_T *localB,
   localDW->DiscreteFilter_icLoad = 1U;
 
   // SystemInitialize for Triggered SubSystem: '<S4>/Compute Coefficients'
-  // SystemInitialize for SignalConversion generated from: '<S6>/Den' incorporates:
-  //   Outport: '<S6>/Den'
+  for (int32_T i = 0; i < 4; i++) {
+    // SystemInitialize for SignalConversion generated from: '<S6>/Den' incorporates:
+    //   Outport: '<S6>/Den'
 
-  localB->OutportBufferForDen[0] = 1.0;
-  localB->OutportBufferForDen[1] = 0.0;
-  localB->OutportBufferForDen[2] = 0.0;
-  localB->OutportBufferForDen[3] = 0.0;
+    localB->OutportBufferForDen[i] = rtCP_Den_Y0[i];
+  }
 
   // End of SystemInitialize for SubSystem: '<S4>/Compute Coefficients'
   // End of SystemInitialize for SubSystem: '<Root>/If Action Subsystem2'
@@ -51,6 +51,8 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
 {
   // SwitchCase: '<Root>/Switch Case'
   if (rtu_Flags->control_mode == ControlModes_Position) {
+    real_T rtb_Divide5;
+    real_T rtb_Divide6;
     real_T rtb_UnitDelay;
     real32_T u0;
     uint8_T rtb_FixPtRelationalOperator;
@@ -81,10 +83,6 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
 
     if ((rtb_FixPtRelationalOperator > 0) &&
         (localZCE->ComputeCoefficients_Trig_ZCE != POS_ZCSIG)) {
-      real_T Divide9_tmp;
-      real_T Divide9_tmp_0;
-      real_T rtb_Divide5;
-      real_T rtb_Divide6;
       real_T rtb_Divide8;
       real_T rtb_Fcn4;
 
@@ -119,24 +117,14 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
 
       // Fcn: '<S6>/Fcn4'
       rtb_Fcn4 = ((rtb_Divide8 + rtb_Divide5) + rtb_Divide6) - 8.0;
+      for (int32_T i = 0; i < 4; i++) {
+        // Product: '<S6>/Divide9' incorporates:
+        //   Gain: '<S6>/Gain1'
 
-      // Product: '<S6>/Divide9' incorporates:
-      //   Gain: '<S6>/Gain1'
+        localB->Divide9[i] = rtCP_Gain1_Gain[i] * rtb_Divide6 / rtb_Fcn4;
+      }
 
-      Divide9_tmp_0 = rtb_Divide6 / rtb_Fcn4;
-
-      // Product: '<S6>/Divide9'
-      localB->Divide9[0] = Divide9_tmp_0;
-
-      // Product: '<S6>/Divide9' incorporates:
-      //   Gain: '<S6>/Gain1'
-
-      Divide9_tmp = 3.0 * rtb_Divide6 / rtb_Fcn4;
-
-      // Product: '<S6>/Divide9'
-      localB->Divide9[1] = Divide9_tmp;
-      localB->Divide9[2] = Divide9_tmp;
-      localB->Divide9[3] = Divide9_tmp_0;
+      real_T OutportBufferForDen_tmp;
 
       // SignalConversion generated from: '<S6>/Den' incorporates:
       //   Constant: '<S6>/Constant4'
@@ -146,7 +134,7 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
       // Fcn: '<S6>/Fcn1' incorporates:
       //   Fcn: '<S6>/Fcn2'
 
-      Divide9_tmp_0 = 3.0 * rtb_Divide6;
+      OutportBufferForDen_tmp = 3.0 * rtb_Divide6;
 
       // SignalConversion generated from: '<S6>/Den' incorporates:
       //   Fcn: '<S6>/Fcn1'
@@ -157,9 +145,9 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
       //   Product: '<S6>/Divide8'
 
       localB->OutportBufferForDen[1] = (((-rtb_Divide8 + rtb_Divide5) +
-        Divide9_tmp_0) + 24.0) / rtb_Fcn4;
+        OutportBufferForDen_tmp) + 24.0) / rtb_Fcn4;
       localB->OutportBufferForDen[2] = (((-rtb_Divide8 - rtb_Divide5) +
-        Divide9_tmp_0) - 24.0) / rtb_Fcn4;
+        OutportBufferForDen_tmp) - 24.0) / rtb_Fcn4;
       localB->OutportBufferForDen[3] = (((rtb_Divide8 - rtb_Divide5) +
         rtb_Divide6) + 8.0) / rtb_Fcn4;
     }
@@ -177,6 +165,19 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
     //   TriggerPort: '<S7>/Trigger'
 
     if (rtb_OR && (localZCE->ComputeInitState_Trig_ZCE != POS_ZCSIG)) {
+      // Sum: '<S7>/Sum of Elements'
+      rtb_Divide5 = -0.0;
+
+      // Sum: '<S7>/Sum of Elements1'
+      rtb_Divide6 = -0.0;
+      for (int32_T i = 0; i < 3; i++) {
+        // Sum: '<S7>/Sum of Elements'
+        rtb_Divide5 += localB->OutportBufferForDen[i + 1];
+
+        // Sum: '<S7>/Sum of Elements1'
+        rtb_Divide6 += localB->Divide9[i + 1];
+      }
+
       // Product: '<S7>/Product2' incorporates:
       //   Constant: '<S7>/Constant'
       //   DataTypeConversion: '<S1>/Cast To Double2'
@@ -186,10 +187,8 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
       //   Sum: '<S7>/Sum of Elements1'
       //   Sum: '<S7>/Sum1'
 
-      localB->Product2 = 1.0 / (((localB->Divide9[1] + localB->Divide9[2]) +
-        localB->Divide9[3]) - ((localB->OutportBufferForDen[1] +
-        localB->OutportBufferForDen[2]) + localB->OutportBufferForDen[3]) *
-        localB->Divide9[0]) * (1.0 - localB->Divide9[0]) *
+      localB->Product2 = 1.0 / (rtb_Divide6 - localB->Divide9[0] * rtb_Divide5) *
+        (1.0 - localB->Divide9[0]) *
         rtu_SensorData->motorsensors.qencoder.rotor_angle;
     }
 
@@ -211,24 +210,27 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
 
     // End of Outputs for SubSystem: '<S4>/Compute Init State'
     if (localDW->DiscreteFilter_icLoad != 0) {
-      localDW->DiscreteFilter_states[0] = localB->Product2;
-      localDW->DiscreteFilter_states[1] = localB->Product2;
-      localDW->DiscreteFilter_states[2] = localB->Product2;
+      for (int32_T i = 0; i < 3; i++) {
+        localDW->DiscreteFilter_states[i] = localB->Product2;
+      }
     }
 
-    localDW->DiscreteFilter_tmp = ((rtu_Targets->position -
-      localDW->DiscreteFilter_states[0] * localB->OutportBufferForDen[1]) -
-      localDW->DiscreteFilter_states[1] * localB->OutportBufferForDen[2]) -
-      localDW->DiscreteFilter_states[2] * localB->OutportBufferForDen[3];
+    localDW->DiscreteFilter_tmp = rtu_Targets->position;
+    for (int32_T i = 0; i < 3; i++) {
+      localDW->DiscreteFilter_tmp -= localB->OutportBufferForDen[i + 1] *
+        localDW->DiscreteFilter_states[i];
+    }
+
+    rtb_Divide5 = localB->Divide9[0] * localDW->DiscreteFilter_tmp;
+    for (int32_T i = 0; i < 3; i++) {
+      rtb_Divide5 += localB->Divide9[i + 1] * localDW->DiscreteFilter_states[i];
+    }
 
     // BusAssignment: '<S1>/Bus Assignment' incorporates:
     //   DataTypeConversion: '<S1>/Cast To Single'
     //   DiscreteFilter: '<S4>/Discrete Filter'
 
-    rty_Targets_out->position = static_cast<real32_T>(((localB->Divide9[0] *
-      localDW->DiscreteFilter_tmp + localDW->DiscreteFilter_states[0] *
-      localB->Divide9[1]) + localDW->DiscreteFilter_states[1] * localB->Divide9
-      [2]) + localDW->DiscreteFilter_states[2] * localB->Divide9[3]);
+    rty_Targets_out->position = static_cast<real32_T>(rtb_Divide5);
 
     // RelationalOperator: '<S3>/FixPt Relational Operator' incorporates:
     //   UnitDelay: '<S3>/Delay Input1'
@@ -282,9 +284,14 @@ void trajectory_planner(const Flags *rtu_Flags, const Targets *rtu_Targets,
 
     // Update for DiscreteFilter: '<S4>/Discrete Filter'
     localDW->DiscreteFilter_icLoad = 0U;
-    localDW->DiscreteFilter_states[2] = localDW->DiscreteFilter_states[1];
-    localDW->DiscreteFilter_states[1] = localDW->DiscreteFilter_states[0];
+    for (int32_T i = 0; i < 2; i++) {
+      localDW->DiscreteFilter_states[2 - i] = localDW->DiscreteFilter_states[1 -
+        i];
+    }
+
     localDW->DiscreteFilter_states[0] = localDW->DiscreteFilter_tmp;
+
+    // End of Update for DiscreteFilter: '<S4>/Discrete Filter'
 
     // Update for UnitDelay: '<S3>/Delay Input1'
     //

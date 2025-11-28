@@ -9,7 +9,7 @@
 //
 // Model version                  : 10.15
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Mon Oct 20 14:52:47 2025
+// C/C++ source code generated on : Wed Nov 26 14:50:13 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -82,6 +82,8 @@ void position_velocity_cascade(const EstimatedData *rtu_Estimates, const Targets
   real32_T rtb_SumI1_e;
   real32_T rtb_Switch2;
   uint32_T rowIdx;
+  boolean_T rtb_Compare_iz_0[3];
+  boolean_T rtb_Logic[2];
   boolean_T rtb_Compare_bu;
   boolean_T rtb_Compare_e;
   boolean_T rtb_FixPtRelationalOperator;
@@ -453,17 +455,27 @@ void position_velocity_cascade(const EstimatedData *rtu_Estimates, const Targets
   //   RelationalOperator: '<S1>/Relational Operator'
   //   RelationalOperator: '<S7>/Compare'
 
-  rowIdx = ((((rtb_Switch2 > 0.1F *
-               rtu_ActuatorCfg->thresholds.motorPeakCurrents) ||
-              rtb_FixPtRelationalOperator) + (static_cast<uint32_T>(rtb_Switch2 <=
-    0.0F) << 1)) << 1) + localDW->Memory_PreviousInput;
-  rtb_Compare_e = rtCP_Logic_table[rowIdx + 8U];
+  rowIdx = 0U;
+  rtb_Compare_iz_0[0] = (rtb_Switch2 <= 0.0F);
+  rtb_Compare_iz_0[1] = ((rtb_Switch2 > 0.1F *
+    rtu_ActuatorCfg->thresholds.motorPeakCurrents) ||
+    rtb_FixPtRelationalOperator);
+  rtb_Compare_iz_0[2] = localDW->Memory_PreviousInput;
+  for (uint32_T sigIdx = 0U; sigIdx < 3U; sigIdx++) {
+    rowIdx = (rowIdx << 1) + rtb_Compare_iz_0[sigIdx];
+  }
+
+  for (uint32_T sigIdx = 0U; sigIdx < 2U; sigIdx++) {
+    rtb_Logic[sigIdx] = rtCP_Logic_table[(sigIdx << 3) + rowIdx];
+  }
+
+  // End of CombinatorialLogic: '<S9>/Logic'
 
   // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
   if (localDW->DiscreteTimeIntegrator_SYSTEM_ENABLE != 0) {
     // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
     localB->DiscreteTimeIntegrator = localDW->DiscreteTimeIntegrator_DSTATE;
-  } else if (rtb_Compare_e || (localDW->DiscreteTimeIntegrator_PrevResetState !=
+  } else if (rtb_Logic[1] || (localDW->DiscreteTimeIntegrator_PrevResetState !=
               0)) {
     // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
     localB->DiscreteTimeIntegrator = 0.0F;
@@ -544,17 +556,15 @@ void position_velocity_cascade(const EstimatedData *rtu_Estimates, const Targets
   localDW->Integrator_PrevResetState_c = static_cast<int8_T>
     (rtb_FixPtRelationalOperator);
 
-  // Update for Memory: '<S9>/Memory' incorporates:
-  //   CombinatorialLogic: '<S9>/Logic'
-
-  localDW->Memory_PreviousInput = rtCP_Logic_table[rowIdx];
+  // Update for Memory: '<S9>/Memory'
+  localDW->Memory_PreviousInput = rtb_Logic[0];
 
   // Update for DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
   localDW->DiscreteTimeIntegrator_SYSTEM_ENABLE = 0U;
   localDW->DiscreteTimeIntegrator_DSTATE = 0.0005F * rtb_Switch2 +
     localB->DiscreteTimeIntegrator;
   localDW->DiscreteTimeIntegrator_PrevResetState = static_cast<int8_T>
-    (rtb_Compare_e);
+    (rtb_Logic[1]);
 }
 
 // Model initialize function

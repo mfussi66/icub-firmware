@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'process_sensors'.
 //
-// Model version                  : 2.1
+// Model version                  : 2.28
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Tue Oct 21 09:22:03 2025
+// C/C++ source code generated on : Thu Nov 27 12:11:49 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -201,6 +201,7 @@ struct Flags
   boolean_T enable_sending_msg_status;
   HardwareFaults hw_faults;
   boolean_T enable_thermal_protection;
+  boolean_T enable_currents_bias_removal;
 
   // control mode
   ControlModes control_mode;
@@ -267,6 +268,36 @@ struct SensorsData
 };
 
 #endif
+
+#ifndef struct_cell_wrap_process_sensors_T
+#define struct_cell_wrap_process_sensors_T
+
+struct cell_wrap_process_sensors_T
+{
+  uint32_T f1[8];
+};
+
+#endif                                 // struct_cell_wrap_process_sensors_T
+
+#ifndef struct_dsp_simulink_MovingAverage_process_sensors_T
+#define struct_dsp_simulink_MovingAverage_process_sensors_T
+
+struct dsp_simulink_MovingAverage_process_sensors_T
+{
+  boolean_T matlabCodegenIsDeleted;
+  int32_T isInitialized;
+  boolean_T isSetupComplete;
+  boolean_T TunablePropsChanged;
+  cell_wrap_process_sensors_T inputVarSize;
+  real32_T ForgettingFactor;
+  int32_T NumChannels;
+  int32_T FrameLength;
+  real32_T pwN;
+  real32_T pmN;
+  real32_T plambda;
+};
+
+#endif                   // struct_dsp_simulink_MovingAverage_process_sensors_T
 #endif                                 // process_sensors_types_h_
 
 //

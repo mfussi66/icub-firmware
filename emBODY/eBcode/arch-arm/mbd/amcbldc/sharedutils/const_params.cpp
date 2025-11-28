@@ -5,11 +5,11 @@
 //  granting, nonprofit, education, and research organizations only. Not
 //  for commercial or industrial use.
 //
-//  Code generation for model "position_velocity_cascade".
+//  Code generation for model "trajectory_planner".
 //
-//  Model version              : 10.15
+//  Model version              : 2.33
 //  Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
-//  C++ source code generated on : Thu Oct  9 17:31:15 2025
+//  C++ source code generated on : Wed Nov 26 14:24:47 2025
 
 #include "rtwtypes.h"
 
@@ -19,6 +19,9 @@ const real32_T rtCP_pooled_Az3IVI54Pn7X[32] = { 0.0F, 0.001F, 0.002F, 0.003F,
   0.014F, 0.015F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F,
   1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F } ;
 
+extern const real_T rtCP_pooled_GvpkPJIQedwp[4];
+const real_T rtCP_pooled_GvpkPJIQedwp[4] = { 1.0, 3.0, 3.0, 1.0 } ;
+
 extern const real32_T rtCP_pooled_IgamRjjg0YgF[6];
 const real32_T rtCP_pooled_IgamRjjg0YgF[6] = { 0.666666687F, -0.333333343F,
   -0.333333343F, 0.666666687F, -0.333333343F, -0.333333343F } ;
@@ -26,3 +29,6 @@ const real32_T rtCP_pooled_IgamRjjg0YgF[6] = { 0.666666687F, -0.333333343F,
 extern const boolean_T rtCP_pooled_kUC6nmgO8rex[16];
 const boolean_T rtCP_pooled_kUC6nmgO8rex[16] = { false, true, false, false, true,
   true, false, false, true, false, true, true, false, false, false, false } ;
+
+extern const real_T rtCP_pooled_zmpeO4p1OHYk[4];
+const real_T rtCP_pooled_zmpeO4p1OHYk[4] = { 1.0, 0.0, 0.0, 0.0 } ;

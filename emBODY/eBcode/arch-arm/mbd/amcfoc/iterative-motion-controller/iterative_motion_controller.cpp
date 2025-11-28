@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'iterative_motion_controller'.
 //
-// Model version                  : 5.33
+// Model version                  : 5.34
 // Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
-// C/C++ source code generated on : Mon Oct 20 14:53:33 2025
+// C/C++ source code generated on : Wed Nov 26 16:57:25 2025
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex-M
@@ -61,7 +61,7 @@ ActuatorConfiguration AmcfocInitConf[2] = { {
         ControlModes_Velocity,
         3.0F,
         -3.0F,
-        20.0F,
+        10.0F,
         10.0F,
         0.0F,
         0.0F,
@@ -107,7 +107,7 @@ ActuatorConfiguration AmcfocInitConf[2] = { {
       0.0F,
       0.0F,
       0.0F,
-      true,
+      false,
       ReferenceEncoder_Motor
     }
   }, { {
@@ -183,7 +183,7 @@ ActuatorConfiguration AmcfocInitConf[2] = { {
       0.0F,
       0.0F,
       0.0F,
-      true,
+      false,
       ReferenceEncoder_Motor
     }
   } } ;                                // Variable: AmcfocInitConf
@@ -1024,6 +1024,11 @@ void AMCFOC_initialize(void)
            MotionController_InstanceData.rtb),
          &(iterative_motion_controller_DW.CoreSubsys[ForEach_itr].
            MotionController_InstanceData.rtdw));
+
+      // SystemInitialize for ModelReference generated from: '<S1>/Process Sensors' 
+      process_sensors_Init
+        (&(iterative_motion_controller_DW.CoreSubsys[ForEach_itr].
+           ProcessSensors_InstanceData.rtdw));
     }
 
     // End of SystemInitialize for SubSystem: '<Root>/Iterative Motion Controller' 
@@ -1064,6 +1069,10 @@ void AMCFOC_terminate(void)
 
     // Terminate for RateTransition generated from: '<S1>/Process Sensors'
     rtw_mutex_destroy();
+
+    // Terminate for ModelReference generated from: '<S1>/Process Sensors'
+    process_sensors_Term(&(iterative_motion_controller_DW.CoreSubsys[ForEach_itr]
+      .ProcessSensors_InstanceData.rtdw));
 
     // Terminate for RateTransition: '<S1>/Rate Transition2'
     rtw_mutex_destroy();
